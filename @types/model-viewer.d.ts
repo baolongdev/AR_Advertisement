@@ -18,24 +18,3 @@ export declare global {
     }
   }
 }
-
-interface ModelViewerProps extends React.HTMLProps<HTMLDivElement> {
-  id: string;
-  "ar": true;
-  "ar-scale": string;
-  "camera-controls": true;
-  "touch-action": string;
-  "auto-rotate": true;
-  "src": string;
-  "shadow-intensity": string;
-  "alt": string;
-  "title": string;
-}
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'model-viewer': ModelViewerProps;
-    }
-  }
-}

@@ -32,7 +32,7 @@ export default function Model() {
                                 alt="A 3D model of a shishkebab"
                                 title="abd"
                             >
-                            </model-viewer>
+                            </model-viewer> 
                         </div>
                         <div className="visit__card-desc">
                             Đoạn mô tả sản phẩm
