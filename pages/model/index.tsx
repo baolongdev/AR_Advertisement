@@ -21,7 +21,6 @@ export default function Model() {
                         <div className="visit__card-elements">
                             <model-viewer
                                 id="reveal"
-                                ar
                                 ar-scale="auto"
                                 camera-controls
                                 touch-action="pan-y"
