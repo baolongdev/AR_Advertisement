@@ -37,7 +37,7 @@ const HeroHome = () => {
           </div>
         </div>
         <div className="hero__content">
-          <div className="hero__over-heading">Augmented Reality - QR</div>
+          <div className="hero__over-heading">AR Advertisement</div>
           <h1 className="hero__heading">
             <div className="hero__h1-span1">Trực tuyến</div>
             <br />
