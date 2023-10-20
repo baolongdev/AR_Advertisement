@@ -11,6 +11,11 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger publish workflow
-        run: |
-          curl -XPOST -u "${{secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/${{ env.GH_USERNAME }}/${{ env.GH_REPONAME }}/actions/workflows/${{ env.WORKFLOW_FILE }}/dispatches --data '{"ref": "main"}'
+      - name: Deploy Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          # TODO: Update Github Secrets with values
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }} # Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }} # Required
+          vercel-args: "--prod" #Optional
