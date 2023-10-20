@@ -6,6 +6,7 @@ import { AppProps } from 'next/app'
 import '../styles/index.css'
 import posthog from 'posthog-js';
 import AdvancedScripts from '../components/utils/advanced-scripts';
+import { Analytics } from '@vercel/analytics/react';
 
 function setupPostHog() {
   // setup posthog
@@ -32,6 +33,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <AdvancedScripts/>
       <DefaultSeo {...SEO}/>
       <Component {...pageProps} />
+      <Analytics />
     </>
   )
 }
