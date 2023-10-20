@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "ar-advertisement",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/model-viewer": "^3.3.0",
+    "@vercel/analytics": "^1.1.1",
     "dotenv": "^16.3.1",
     "next": "13.5.4",
     "next-seo": "^6.1.0",

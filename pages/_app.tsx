@@ -5,7 +5,7 @@ import SEO from '../next-seo.config';
 import { AppProps } from 'next/app'
 import '../styles/index.css'
 import posthog from 'posthog-js';
-import Script from 'next/script';
+import AdvancedScripts from '../components/utils/advanced-scripts';
 
 function setupPostHog() {
   // setup posthog
@@ -29,13 +29,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   setupPostHog();
   return (
     <>
-    <Script src="https://cdnjs.cloudflare.com/ajax/libs/platform/1.3.5/platform.min.js"/>
-    <Script
-        async
-        strategy='afterInteractive'
-        type='module'
-        src='https://unpkg.com/@google/model-viewer@^2.1.1/dist/model-viewer.min.js'
-      />
+      <AdvancedScripts/>
       <DefaultSeo {...SEO}/>
       <Component {...pageProps} />
     </>
