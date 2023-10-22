@@ -46,26 +46,26 @@ export default function render() {
                         <div className="visit__card-title-over">
                             <div>AR_Advertisement</div>
                         </div>
-                        <div className='absolute top-4 right-4'>
-                            <QRCode
-                                size={86}
-                                style={{ height: "auto", maxWidth: "86px", width: "86px" }}
-                                value={"value"}
-                                viewBox={`0 0 86 86`}
-                            />
-                        </div>
                         <div className="visit__card-play-wrap">
                             {post.title}
                             <img src="https://assets-global.website-files.com/651c348dccebd78124903fb3/651c348dccebd78124904042_ico_btn-play.svg" loading="lazy" alt="" className="visit__card-play" />
                         </div>
-                        <button className='btn btn--hero flex text-sm mb-4 py-0 pt-3 cursor-pointer select-none'
-                            onClick={() => copyCodeToClipboard(url)}
-                        >
-                            <p className="">
-                                <code>{url}</code>
-                            </p>
-                            <i className="ri-share-line absolute top-3 right-3"></i>
-                        </button>
+                        <div className='sm:flex items-center gap-4 pb-5'>
+                            <button className='btn btn--hero flex sm:text-sm text-xs mb-4 mt-5 py-0 pt-3 cursor-pointer select-none'
+                                onClick={() => copyCodeToClipboard(url)}
+                            >
+                                <p className="">
+                                    <code>{url}</code>
+                                    <i className="ri-share-line pl-4"></i>
+                                </p>
+                            </button>
+                            <QRCode
+                                size={100}
+                                style={{ height: "auto", maxWidth: "86px", width: "86px" }}
+                                value={url || ''}
+                                viewBox={`0 0 86 86`}
+                            />
+                        </div>
 
                         <div className="visit__card-elements">
                             <model-viewer
@@ -77,7 +77,8 @@ export default function render() {
                                 touch-action="pan-y"
                                 auto-rotate
                                 shadow-intensity="1"
-                            // poster="/assets/demo.png"
+                                ar-modes="webxr scene-viewer quick-look"
+                                // poster="/assets/logo.png"
                             >
                             </model-viewer>
                         </div>
