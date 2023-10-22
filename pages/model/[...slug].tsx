@@ -77,7 +77,8 @@ export default function render() {
                                 touch-action="pan-y"
                                 auto-rotate
                                 shadow-intensity="1"
-                                ar-modes="webxr scene-viewer quick-look"
+                                ar-modes="webxr scene-viewer quick-look ar"
+                                ar
                                 // poster="/assets/logo.png"
                             >
                             </model-viewer>
