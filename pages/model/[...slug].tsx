@@ -1,0 +1,92 @@
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react'
+import { getDataDatabaseByKey, getSignedUrlFileStorageByKey } from '../../components/utils/supabase-storage';
+import QRCode from 'react-qr-code';
+import { copyCodeToClipboard } from '../../components/utils/LinkToClipboad';
+
+
+
+export default function render() {
+    const router = useRouter();
+    const [url, setUrl] = useState(null)
+    const [post, setPost] = useState({
+        url: "",
+        title: "",
+        description: "",
+        placement: false,
+        fileContent: false,
+    });
+    useEffect(() => {
+        setUrl(window.location.href)
+    }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            const key = router.query.slug;
+
+            if (key) {
+                const fileUrl = await getSignedUrlFileStorageByKey(key[0]); // Await the async function
+                getDataDatabaseByKey(key[0]).then((data) => {
+                    if (data) {
+                        console.log(data);
+                        setPost({ ...data, url: fileUrl }); // Set the 'url' property
+                    }
+                });
+            }
+        };
+
+        fetchData();
+
+    }, [router.query.slug]);
+
+    return (
+        <section id="modelview" className="section">
+            <div className="content">
+                <div className="visit__cards">
+                    <div className="visit__card mod--first">
+                        <div className="visit__card-title-over">
+                            <div>AR_Advertisement</div>
+                        </div>
+                        <div className='absolute top-4 right-4'>
+                            <QRCode
+                                size={86}
+                                style={{ height: "auto", maxWidth: "86px", width: "86px" }}
+                                value={"value"}
+                                viewBox={`0 0 86 86`}
+                            />
+                        </div>
+                        <div className="visit__card-play-wrap">
+                            {post.title}
+                            <img src="https://assets-global.website-files.com/651c348dccebd78124903fb3/651c348dccebd78124904042_ico_btn-play.svg" loading="lazy" alt="" className="visit__card-play" />
+                        </div>
+                        <button className='btn btn--hero flex text-sm mb-4 py-0 pt-3 cursor-pointer select-none'
+                            onClick={() => copyCodeToClipboard(url)}
+                        >
+                            <p className="">
+                                <code>{url}</code>
+                            </p>
+                            <i className="ri-share-line absolute top-3 right-3"></i>
+                        </button>
+
+                        <div className="visit__card-elements">
+                            <model-viewer
+                                src={post.url["signedUrl"]}
+                                alt={post.description}
+                                title={post.title}
+                                ar-scale="auto"
+                                camera-controls
+                                touch-action="pan-y"
+                                auto-rotate
+                                shadow-intensity="1"
+                            // poster="/assets/demo.png"
+                            >
+                            </model-viewer>
+                        </div>
+                        <div className="visit__card-desc">
+                            {post.description}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}

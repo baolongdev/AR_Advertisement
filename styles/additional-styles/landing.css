@@ -2557,11 +2557,6 @@ a {
   display: flex;
 }
 
-.visit__cards {
-  justify-content: center;
-  align-items: stretch;
-  display: flex;
-}
 
 .visit__card {
   max-width: 230px;

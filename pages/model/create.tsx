@@ -1,19 +1,20 @@
 import { useRouter } from 'next/router';
 import { Leva, button, folder, useControls } from 'leva';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { handleFileUpload, readFileContent } from '../../components/editor/utils/fileUtils';
 import { createSafeObjectUrlFromArrayBuffer } from '../../components/editor/utils/create_object_url';
-import { uploadFile } from '../../components/utils/supabase-storage';
+import { uploadFileDatabase, uploadFileStorage } from '../../components/utils/supabase-storage';
 import { generateRandomFileName } from '../../components/utils/random';
 
 export default function ModelCreate() {
     const router = useRouter();
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [fileBlobUrl, setFileBlobUrl] = useState(null);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [placement, setPlacement] = useState(false);
-    const [fileContent, setFileContent] = useState(false);
+
+    const selectedFile = useRef(null);
+    const fileBlobUrl = useRef(null);
+    const [stateFileBlobUrl, setFileBlobUrl] = useState(null);
+    const title = useRef("");
+    const description = useRef("");
+    const placement = useRef(false);
 
     useControls(() => {
         const controls = {
@@ -23,20 +24,20 @@ export default function ModelCreate() {
                 label: "",
             },
             "Thông tin": folder({
-                title: {
-                    value: title,
+                "title": {
+                    value: title.current,
                     label: "Tiêu đề",
-                    onChange: (value) => setTitle(value),
+                    onChange: (value) => title.current = value,
                 },
-                description: {
-                    value: description,
+                "description": {
+                    value: description.current,
                     label: "Đoạn mô tả",
-                    onChange: (value) => setDescription(value),
+                    onChange: (value) => description.current = value,
                 },
-                placement: {
-                    value: placement,
+                "placement": {
+                    value: placement.current,
                     label: "Đặt trên tường",
-                    onChange: (value) => setPlacement(value),
+                    onChange: (value) => placement.current = value,
                 },
             }),
 
@@ -45,51 +46,52 @@ export default function ModelCreate() {
                 fileInput.type = 'file';
                 fileInput.style.display = 'none';
                 fileInput.accept = '.glb,.gltf';
-                
+
                 fileInput.addEventListener('change', (event) => {
                     handleFileUpload(event, async (file) => {
-                        setSelectedFile(file);
+                        selectedFile.current = file;
                         readFileContent(file, async (fileContent, objectUrl) => {
-                            setFileContent(fileContent)
-                            setFileBlobUrl(objectUrl);
+                            fileContent.current = fileContent;
+                            fileBlobUrl.current = objectUrl;
+                            setFileBlobUrl(objectUrl)
                         });
                     });
                 });
                 fileInput.click();
             }),
-            "Tạo link": button((get) => {
-                const root = generateRandomFileName()
-                console.log(fileBlobUrl);
-                
-                // uploadFile(root, "model", selectedFile)
-                // uploadFile(root, "title", title)
-                // uploadFile(root, "description", description)
-                // uploadFile(root, "placement", placement)
-                // uploadFile(root, "colorBG", colorBG)
-                // uploadFile(root, "fileContent", fileContent)
+            "Tạo link": button(async () => {
+                try {
+                    const key = generateRandomFileName();
+                    await uploadFileStorage(key, selectedFile.current.name, selectedFile.current);
+                    const dataForDatabase = {
+                        title: title.current,
+                        description: description.current,
+                        placement: placement.current,
+                    };
+                    await uploadFileDatabase(key, dataForDatabase);
+                    router.push(`/model/${key}`)
+                } catch (error) {
+                    console.error('Error during file and database upload:', error);
+                }
             }),
         };
-
-        if (selectedFile) {
-            controls["Thêm Hotspot"] = button(() => { });
-        }
-
         return controls;
     });
-    
+
     return (
         <div className='create'>
             <Leva titleBar={{ title: "Bảng điều khiển", drag: false }} hideCopyButton={true} />
             {router.isFallback ? <h1>Loading…</h1> : (
                 <model-viewer
-                    src={fileBlobUrl}
+                    src={stateFileBlobUrl}
+                    alt={description.current}
+                    title={title.current}
                     ar-scale="auto"
                     camera-controls
                     touch-action="pan-y"
                     auto-rotate
                     shadow-intensity="1"
-                    alt={description}
-                    title={title}
+                    // ar = {arCheck}
                 />
             )}
         </div>
