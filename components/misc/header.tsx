@@ -64,8 +64,8 @@ const Header = () => {
               </div>
               <div className="header__col col--3">
                 {/* Desktop sign in links */}
-                <a data-remodal-target="form" data-anim="link" href="#" className="header__login">login</a>
-                <a data-remodal-target="form" href="#" className="btn btn--slim w-button">sign up</a>
+                <a data-remodal-target="form" data-anim="link" href="/login" className="header__login">login</a>
+                <a data-remodal-target="form" href="/signup" className="btn btn--slim w-button">sign up</a>
               </div>
               <div className="header__humburger-wrap" onClick={toggleHumburger}>
                 <div className="header__humburger">

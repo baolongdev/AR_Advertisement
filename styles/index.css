@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'additional-styles/editor.css';
 @import 'additional-styles/utils.css';
 @import 'additional-styles/landing.css';
 @import 'additional-styles/modelviewer.css';

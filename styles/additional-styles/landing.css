@@ -2310,7 +2310,10 @@ a {
   position: relative;
   overflow: hidden;
 }
-
+.text-align-center{
+  text-align: center !important;
+  justify-content: space-around !important;
+}
 .btn.btn--hero:hover {
   color: #000;
 }

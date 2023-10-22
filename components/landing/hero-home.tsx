@@ -37,7 +37,7 @@ const HeroHome = () => {
           </div>
         </div>
         <div className="hero__content">
-          <div className="hero__over-heading">AR Advertisement</div>
+          <div className="hero__over-heading">ARID - AR in advertisement</div>
           <h1 className="hero__heading">
             <div className="hero__h1-span1">Trực tuyến</div>
             <br />
@@ -47,7 +47,7 @@ const HeroHome = () => {
             <span className="hero__h1-span1">Thuận lợi</span>
           </h1>
           <div className="hero__btn-wrap">
-            <a data-remodal-target="form" href="#" className="btn btn--hero w-button">
+            <a data-remodal-target="form" href="#exposition" className="btn btn--hero w-button">
               <span>Khám pháp ngay</span>
               &nbsp;
               <span className="btn__ico">&nbsp;</span>
