@@ -1,28 +1,28 @@
 import { DefaultSeoProps } from "next-seo";
 
-const description = "Tired of manually transferring notes to Obsidian? Use Fleeting Notes to effortlessly capture your ideas and sync them with Obsidian."
+const description = ""
 // See https://www.npmjs.com/package/next-seo for more options
 const config: DefaultSeoProps = {
-  titleTemplate: "%s | Fleeting Notes",
-  defaultTitle: "Fleeting Notes | A scratchpad that syncs with Obsidian",
-  canonical: 'https://www.fleetingnotes.app/',
+  titleTemplate: "%s | AR_Advertisement",
+  defaultTitle: "AR_Advertisement ",
+  canonical: 'https://www.ar-advertisement.vercel.app/',
   description,
   
   openGraph: {
     type: 'website',
     locale: 'en_IE',
-    title: 'Fleeting Notes',
+    title: 'AR_Advertisement',
     description,
-    url: 'https://www.fleetingnotes.app/',
+    url: 'https://www.ar-advertisement.vercel.app/',
     images: [{
-      url: 'https://www.fleetingnotes.app/favicon/og-image.png',
+      url: 'https://www.ar-advertisement.vercel.app/favicon/og-image.png',
       width: 1200,
       height: 787,
       alt: 'Og Image Alt',
     }]
   },
   twitter: {
-    site: '@fleetingnotes_',
+    site: '@ar-advertisement.vercel_',
     cardType: 'summary_large_image',
   },
   additionalLinkTags: [
