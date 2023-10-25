@@ -7,6 +7,8 @@ import '../styles/index.css'
 import posthog from 'posthog-js';
 import AdvancedScripts from '../components/utils/advanced-scripts';
 import { Analytics } from '@vercel/analytics/react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function setupPostHog() {
   // setup posthog
@@ -25,7 +27,6 @@ function setupPostHog() {
   }, []);
 
 }
-
 export default function MyApp({ Component, pageProps }: AppProps) {
   setupPostHog();
   return (
@@ -34,6 +35,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <DefaultSeo {...SEO}/>
       <Component {...pageProps} />
       <Analytics />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
     </>
   )
 }

@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
-const Header = () => {
+export default function Header({ user_email }) {
   const [humburgerActive, setHumburgerActive] = useState(false);
   const headerHumburgerCloseRef = useRef(null);
   const menuRef = useRef(null);
@@ -26,13 +27,11 @@ const Header = () => {
   };
 
   const navLinks = [
-    { text: "Home", href: "/" },
-    { text: "Showcase", href: "/showcase" },
-    { text: "Pricing", href: "/pricing" },
-    { text: "Docs", href: "/docs" },
-    // { text: "Payments", href: "#audio-guide" },
+    { text: "Account", href: "/account" },
+    { text: "Help", href: "/help" },
   ];
 
+  
   return (
     <>
       <header className="header">
@@ -40,7 +39,7 @@ const Header = () => {
           <div className="content">
             <div className="header__columns">
               <div className="header__col">
-                <a href="#" className="header__logo w-inline-block">
+                <a href="/" className="header__logo w-inline-block">
                   <img
                     src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd78124904040_logo.svg"
                     loading="eager"
@@ -51,6 +50,12 @@ const Header = () => {
               </div>
               <div className="header__col col--2">
                 <nav className="header__nav">
+                  <p className='header__nav-link'>
+                    Hello, {user_email
+                      ? (user_email.includes('@') ? user_email.split('@')[0] : user_email).substring(0, 18)
+                      : 'Guest'
+                    } 😄
+                  </p>
                   {navLinks.map((link, index) => (
                     <a
                       key={index}
@@ -61,46 +66,17 @@ const Header = () => {
                       {link.text}
                     </a>
                   ))}
+                  {/* <a href="#" className="-m-1.5 p-1.5"
+                    onClick={}
+                  >
+                    <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+                  </a> */}
                 </nav>
-              </div>
-              <div className="header__col col--3">
-                {/* Desktop sign in links */}
-                <a data-remodal-target="form" data-anim="link" href="/account" className="header__login">login</a>
-                <a data-remodal-target="form" href="/account" className="btn btn--slim w-button">sign up</a>
-              </div>
-              <div className="header__humburger-wrap" onClick={toggleHumburger}>
-                <div className="header__humburger">
-                  <div className="header__humburger-line mod--1" />
-                  <div className="header__humburger-line mod--2" />
-                  <div className="header__humburger-line mod--3" />
-                </div>
-                <div className="header__humburger-close" ref={headerHumburgerCloseRef} />
               </div>
             </div>
           </div>
         </div>
       </header>
-      <div className="menu" ref={menuRef}>
-        <div className="menu__content">
-          <nav className="menu__nav">
-            {navLinks.map((link, index) => (
-              <a
-                key={index}
-                href={link.href}
-                className={`menu__nav-link${index === 0 ? ' w--current' : ''}${index === navLinks.length - 1 ? ' mod--last' : ''}`}
-              >
-                {link.text}
-              </a>
-            ))}
-          </nav>
-          <div className="menu__btns-wrap">
-            <a data-anim="link" href="#" className="header__login">login</a>
-            <a href="#" className="btn btn--slim w-button">sign up</a>
-          </div>
-        </div>
-      </div>
     </>
   );
 };
-
-export default Header;

@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { subscribeCustomerIo } from '../utils/newsletter';
-
 function Footer() {
   const [newsletterSubbed, setNewsletterSubbed] = useState(false);
   const subscribeNewsletter = async (event) => {
@@ -12,11 +11,23 @@ function Footer() {
       setNewsletterSubbed(true);
     }
   }
+  const socialLinks = [
+    { name: 'Facebook', url: 'https://www.facebook.com/', iconClass: 'ri-facebook-fill' },
+    { name: 'Behance', url: 'https://www.behance.net/', iconClass: 'ri-behance-fill' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/', iconClass: 'ri-linkedin-fill' },
+    { name: 'Instagram', url: 'https://www.instagram.com/', iconClass: 'ri-instagram-line' },
+    { name: 'Dribbble', url: 'https://dribbble.com/', iconClass: 'ri-dribbble-line' },
+  ];
+  const menuItems = [
+    { label: "Home", href: "/" },
+    { label: "Showcase", href: "/showcase" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Docs", href: "/docs" },
+  ];
+
   return (
     <footer className='footer'>
-      <div
-        className="content mod--footer"
-      >
+      <div className="content mod--footer">
         <div className="footer__columns">
           <div className="footer__col col--1">
             <a href="#" className="footer__logo w-inline-block">
@@ -36,75 +47,29 @@ function Footer() {
           </div>
           <div className="footer__col col--2">
             <nav className="footer__nav">
-              <a href="#virtual-museum" data-anim="link" className="footer__nav-link">
-                MUSEUM
-              </a>
-              <a href="#exposition" data-anim="link" className="footer__nav-link">
-                Tính năng
-              </a>
-              <a href="#about" data-anim="link" className="footer__nav-link">
-                Về chúng tôi
-              </a>
-              <a href="#audio-guide" data-anim="link" className="footer__nav-link">
-                Sản phẩm
-              </a>
+              {menuItems.map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href} 
+                  data-anim="link"
+                  className="footer__nav-link"
+                >
+                  {item.label}
+                </a>
+              ))}
             </nav>
+
             <div className="footer__social">
-              <a
-                href="https://www.facebook.com/"
-                target="_blank"
-                className="footer__soc-link w-inline-block"
-              >
-                <img
-                  src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd7812490405c_ico_facebook-f.svg"
-                  loading="lazy"
-                  alt=""
-                />
-              </a>
-              <a
-                href="https://www.behance.net/"
-                target="_blank"
-                className="footer__soc-link w-inline-block"
-              >
-                <img
-                  src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd7812490405b_ico_behance.svg"
-                  loading="lazy"
-                  alt=""
-                />
-              </a>
-              <a
-                href="https://www.linkedin.com/"
-                target="_blank"
-                className="footer__soc-link w-inline-block"
-              >
-                <img
-                  src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd7812490405a_ico_linkedin.svg"
-                  loading="lazy"
-                  alt=""
-                />
-              </a>
-              <a
-                href="https://www.instagram.com/"
-                target="_blank"
-                className="footer__soc-link w-inline-block"
-              >
-                <img
-                  src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd78124904058_ico_instagram.svg"
-                  loading="lazy"
-                  alt=""
-                />
-              </a>
-              <a
-                href="https://dribbble.com/"
-                target="_blank"
-                className="footer__soc-link w-inline-block"
-              >
-                <img
-                  src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd78124904059_ico_dribbble.svg"
-                  loading="lazy"
-                  alt=""
-                />
-              </a>
+              {socialLinks.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.url}
+                  target="_blank"
+                  className="footer__soc-link w-inline-block"
+                >
+                  <i className={link.iconClass}></i>
+                </a>
+              ))}
             </div>
           </div>
           <div className="footer__col col--3">
@@ -178,61 +143,16 @@ function Footer() {
           </div>
         </div>
         <div className="footer__social mod--mob">
-          <a
-            href="https://www.facebook.com/halolabteam/"
-            target="_blank"
-            className="footer__soc-link w-inline-block"
-          >
-            <img
-              src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd7812490405c_ico_facebook-f.svg"
-              loading="lazy"
-              alt=""
-            />
-          </a>
-          <a
-            href="https://www.behance.net/halolab"
-            target="_blank"
-            className="footer__soc-link w-inline-block"
-          >
-            <img
-              src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd7812490405b_ico_behance.svg"
-              loading="lazy"
-              alt=""
-            />
-          </a>
-          <a
-            href="https://www.linkedin.com/company/halolabteam/"
-            target="_blank"
-            className="footer__soc-link w-inline-block"
-          >
-            <img
-              src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd7812490405a_ico_linkedin.svg"
-              loading="lazy"
-              alt=""
-            />
-          </a>
-          <a
-            href="https://www.instagram.com/halolabteam/"
-            target="_blank"
-            className="footer__soc-link w-inline-block"
-          >
-            <img
-              src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd78124904058_ico_instagram.svg"
-              loading="lazy"
-              alt=""
-            />
-          </a>
-          <a
-            href="https://dribbble.com/halolab"
-            target="_blank"
-            className="footer__soc-link w-inline-block"
-          >
-            <img
-              src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd78124904059_ico_dribbble.svg"
-              loading="lazy"
-              alt=""
-            />
-          </a>
+          {socialLinks.map((link, index) => (
+            <a
+              key={index}
+              href={link.url}
+              target="_blank"
+              className="footer__soc-link w-inline-block"
+            >
+              <i className={link.iconClass}></i>
+            </a>
+          ))}
         </div>
       </div>
 

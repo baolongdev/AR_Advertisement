@@ -6,10 +6,10 @@ const supabase = createClient(
     "https://czicgxdmyyjpfkmjpfon.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6aWNneGRteXlqcGZrbWpwZm9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc4MTI4ODQsImV4cCI6MjAxMzM4ODg4NH0.OMLwrt4app9rG8FegOrn6wLqpbS-j76ZInLjSeU-7Fw");
 
-export async function uploadFileStorage(key, filename, filedata) {
+export async function uploadFileStorage(userId, key, filename, filedata) {
     const { data, error } = await supabase.storage
         .from('modelcreate')
-        .upload(`${key}/${filename}`, filedata);
+        .upload(`${userId}/${key}/${filename}`, filedata);
 
     if (error) {
         console.error('Lỗi khi tải lên tệp:', error);
@@ -19,6 +19,7 @@ export async function uploadFileStorage(key, filename, filedata) {
         return data;
     }
 }
+
 export async function getSignedUrlFileStorageByKey(key) {
     const allowedExtensions = ['glb', 'gltf'];
     const listFile = await getFileListInFolder(key, allowedExtensions);
@@ -36,7 +37,7 @@ export async function getSignedUrlFileStorageByKey(key) {
     const { data } = await supabase.storage
         .from('modelcreate')
         .createSignedUrl(`${key}/${fileName}.${extension}`, expirationTimestamp.getTime());
-            
+
     return data;
 }
 
@@ -67,13 +68,14 @@ export async function getFileListInFolder(key, allowedExtensions) {
 
 
 // UploadDatabase
-export async function uploadFileDatabase(key, dataJSON) {
+export async function uploadFileDatabase(key, userId, dataJSON) {
     const { data, error } = await supabase
         .from('modelcreate')
         .upsert([
             {
                 "key": key,
-                "data": dataJSON
+                "data": dataJSON,
+                "userId": userId
             }
         ]);
 
@@ -105,3 +107,28 @@ export async function getDataDatabaseByKey(key) {
         }
     }
 }
+
+export async function getAllDataByUserId(userId) {
+    const { data, error } = await supabase
+        .from('modelcreate')
+        .select('data')
+        .eq('userId', userId);
+
+    if (error) {
+        console.error('Lỗi khi truy xuất dữ liệu:', error);
+        return null;
+    } else {
+        if (data && data.length > 0) {
+            console.log('Dữ liệu đã được truy xuất thành công:', data);
+            return data;
+        } else {
+            console.log('Không tìm thấy dữ liệu cho userId:', userId);
+            return [];
+        }
+    }
+}
+
+
+
+
+
