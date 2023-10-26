@@ -26,6 +26,7 @@ export default function render() {
 
             if (key) {
                 const fileUrl = await getSignedUrlFileStorageByKey(key[0]); // Await the async function
+                
                 getDataDatabaseByKey(key[0]).then((data) => {
                     if (data) {
                         console.log(data);

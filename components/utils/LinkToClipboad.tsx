@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export function copyCodeToClipboard(url) {
     // Create a temporary input element to copy text to clipboard
     const input = document.createElement('input');
@@ -8,5 +10,5 @@ export function copyCodeToClipboard(url) {
     document.body.removeChild(input);
 
     // Notify the user that the text has been copied
-    alert('Link copied to clipboard');
+    toast.success('Sao chép thành công!');
 }

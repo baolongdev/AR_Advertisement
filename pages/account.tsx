@@ -3,9 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { Auth } from '@supabase/auth-ui-react'
 import Dashboard from '../components/dashboard/dashboard';
 import {useSession} from '../hooks/useSession'
-const supabase = createClient(
-    "https://czicgxdmyyjpfkmjpfon.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6aWNneGRteXlqcGZrbWpwZm9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc4MTI4ODQsImV4cCI6MjAxMzM4ODg4NH0.OMLwrt4app9rG8FegOrn6wLqpbS-j76ZInLjSeU-7Fw");
+import { supabase } from '../components/utils/supabase-storage';
 
 export default function LoginPage() {
     const {session} = useSession();   

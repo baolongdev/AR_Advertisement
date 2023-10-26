@@ -1,23 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import CardView from './card';
 import AddCardView from './add-card';
+import { getAllDataByUserId } from '../utils/supabase-storage';
 
 export default function EmptyStates({ session }) {
     const [filterValue, setFilterValue] = useState('all');
     const [sortValue, setSortValue] = useState('date_created');
+    const [userId, setUserId] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [cardData, setCardData] = useState([]);
 
     useEffect(() => {
-        // Your useEffect logic here
-    }, []);
+        if (session && session.user) {
+            const user_id = session.user.identities[0].user_id;
+            const user_email = session.user.email;
+            setUserId(user_id);
+            setEmail(user_email);
+        }
+
+        getAllDataByUserId(userId).then((data) => {
+            if (data) {
+                setCardData(data);
+            }
+        });        
+    }, [session, userId]);
 
     const handleFilterChange = (e) => {
         setFilterValue(e.target.value);
-        // Add any logic you need to handle the filter change
     };
 
     const handleSortChange = (e) => {
         setSortValue(e.target.value);
-        // Add any logic you need to handle the sort change
     };
 
     return (
@@ -43,8 +56,9 @@ export default function EmptyStates({ session }) {
                 </div>
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-                <CardView />
-                <CardView />
+                {cardData.map((card, index) => (
+                    <CardView key={index} data={card}/>
+                ))}
                 <AddCardView />
             </div>
         </div>

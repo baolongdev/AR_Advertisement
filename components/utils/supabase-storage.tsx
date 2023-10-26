@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 
 // Initialize the Supabase client with your configuration
-const supabase = createClient(
+export const supabase = createClient(
     "https://czicgxdmyyjpfkmjpfon.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6aWNneGRteXlqcGZrbWpwZm9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc4MTI4ODQsImV4cCI6MjAxMzM4ODg4NH0.OMLwrt4app9rG8FegOrn6wLqpbS-j76ZInLjSeU-7Fw");
 
@@ -22,37 +22,40 @@ export async function uploadFileStorage(userId, key, filename, filedata) {
 
 export async function getSignedUrlFileStorageByKey(key) {
     const allowedExtensions = ['glb', 'gltf'];
-    const listFile = await getFileListInFolder(key, allowedExtensions);
+    const userId = await getUserIdByKey(key);
+    
+    const listFile = await getFileListInFolder(userId, key, allowedExtensions);
+    console.log(listFile);
     if (listFile.length <= 0) {
         return null;
     }
 
     const fileName = listFile[0].fileName;
     const extension = listFile[0].extension;
-
+    
     // Set the expiration time for the signed URL (e.g., 1 hour from now)
     const expirationTimestamp = new Date();
     expirationTimestamp.setHours(expirationTimestamp.getHours() + 1);
 
     const { data } = await supabase.storage
         .from('modelcreate')
-        .createSignedUrl(`${key}/${fileName}.${extension}`, expirationTimestamp.getTime());
+        .createSignedUrl(`${userId}/${key}/${fileName}.${extension}`, expirationTimestamp.getTime());
 
     return data;
 }
 
 
 
-export async function getFileListInFolder(key, allowedExtensions) {
+export async function getFileListInFolder(userId, key, allowedExtensions) {
     const { data, error } = await supabase.storage
-        .from('modelcreate')
-        .list(key); // Specify the folder path you want to list
-
+    .from('modelcreate')
+    .list(`${userId}/${key}`); // Specify the folder path you want to list
+    
     if (error) {
         console.error('Error listing files:', error);
         return null;
     }
-
+    
     const fileData = data.map((file) => {
         const parts = file.name.split('.'); // Split the file name by periods
         const extension = parts.pop(); // Get the last part as the extension
@@ -108,10 +111,27 @@ export async function getDataDatabaseByKey(key) {
     }
 }
 
+export async function getUserIdByKey(key) {
+    // Assuming you have a table named 'modelcreate' that stores the mapping of keys to userId
+    const { data, error } = await supabase
+        .from('modelcreate')
+        .select('userId')
+        .eq('key', key);
+
+    if (error) {
+        console.error('Error fetching userId:', error);
+        return null;
+    } else if (data && data.length > 0) {
+        return data[0].userId;
+    } else {
+        return null; // Handle the case where userId is not found for the given key
+    }
+}
+
 export async function getAllDataByUserId(userId) {
     const { data, error } = await supabase
         .from('modelcreate')
-        .select('data')
+        .select('key, data, created_at')
         .eq('userId', userId);
 
     if (error) {

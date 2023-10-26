@@ -8,7 +8,9 @@ import { generateRandomFileName } from '../../components/utils/random';
 import { toast } from 'react-toastify';
 import { useSession, useUserInfo } from '../../hooks/useSession';
 
+function createControls(title, description, placement, handleFileUpload, readFileContent) {
 
+}
 
 export default function ModelCreate() {
     const router = useRouter();
@@ -17,30 +19,18 @@ export default function ModelCreate() {
     const [stateFileBlobUrl, setFileBlobUrl] = useState(null);
     const title = useRef("");
     const description = useRef("");
+    const userIdRef = useRef("");
+    const emailRef = useRef("");
     const placement = useRef(false);
-    const { session } = useSession();
-    const [userId, setUserId] = useState(null);
-    const [email, setEmail] = useState(null);
-    
-    // useEffect(() => {
-    //     if (session && session.user) {
-    //         const user_id = session.user.identities[0].user_id;
-    //         const user_email = session.user.email;
-    //         setUserId(user_id);
-    //         setEmail(user_email);
-    //     }
-    // }, [session, userId, email]);
-    
-    
+    const { session, userId, email } = useSession();
+
+
     useControls(() => {
         const controls = {
-            "author": {
+            "Author": {
                 value: "Author: Blong1204\nEmail: longle12042006a@gmail.com",
                 editable: false,
                 label: "",
-            },
-            "userId" : {
-                value: userId
             },
             "Thông tin": folder({
                 "title": {
@@ -79,38 +69,44 @@ export default function ModelCreate() {
                 fileInput.click();
             }),
             "Tạo link": button(async () => {
-                // if (!title.current || !description.current || placement.current === null) {
-                //     // Check if any of the required fields are empty
-                //     toast.error("Please fill in all the required fields.");
-                //     return; // Exit the function
-                // }
-                // try {
-                //     const key = generateRandomFileName();
-                //     await uploadFileStorage(userId, key, selectedFile.current.name, selectedFile.current);
-                //     const dataForDatabase = {
-                //         title: title.current,
-                //         description: description.current,
-                //         placement: placement.current,
-                //     };
-                //     await uploadFileDatabase(key, userId, dataForDatabase);
-            
-                //     toast.success("Tải dữ liệu thành công!");
-            
-                //     setTimeout(() => {
-                //         router.push(`/model/${key}`);
-                //     }, 5000);
-                // } catch (error) {
-                //     toast.warning("Error during file and database upload: "+error);
-                // }
-                console.log(userId);
-                
+
+                if (!title.current || !description.current || placement.current === null) {
+                    // Check if any of the required fields are empty
+                    toast.error("Please fill in all the required fields.");
+                    return; // Exit the function
+                }
+                try {
+                    const key = generateRandomFileName();
+                    await uploadFileStorage(userIdRef.current, key, selectedFile.current.name, selectedFile.current);
+                    const dataForDatabase = {
+                        title: title.current,
+                        description: description.current,
+                        placement: placement.current,
+                    };
+                    await uploadFileDatabase(key, userIdRef.current, dataForDatabase);
+
+                    toast.success("Tải dữ liệu thành công!");
+
+                    setTimeout(() => {
+                        router.push(`/model/${key}`);
+                    }, 5000);
+                } catch (error) {
+                    toast.warning("Error during file and database upload: " + error);
+                }
             }),
         };
         return controls;
     });
 
+    useEffect(() => {
+        userIdRef.current = userId
+        emailRef.current = email
+    }, [session, userId, email]);
+
+
     return (
         <div className='create'>
+            {userId}
             <Leva titleBar={{ title: "Bảng điều khiển", drag: false }} hideCopyButton={true} />
             {router.isFallback ? <h1>Loading…</h1> : (
                 <model-viewer
