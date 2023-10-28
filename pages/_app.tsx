@@ -34,7 +34,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   setupPostHog();
   return (
     <>
-    
       <AdvancedScripts/>
       <DefaultSeo {...SEO}/>
       <Component {...pageProps} />
