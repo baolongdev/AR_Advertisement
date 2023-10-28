@@ -9,6 +9,7 @@ import AdvancedScripts from '../components/utils/advanced-scripts';
 import { Analytics } from '@vercel/analytics/react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
 
 function setupPostHog() {
   // setup posthog
@@ -27,10 +28,13 @@ function setupPostHog() {
   }, []);
 
 }
+
+Modal.setAppElement('body');
 export default function MyApp({ Component, pageProps }: AppProps) {
   setupPostHog();
   return (
     <>
+    
       <AdvancedScripts/>
       <DefaultSeo {...SEO}/>
       <Component {...pageProps} />

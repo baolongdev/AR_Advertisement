@@ -2082,7 +2082,7 @@ textarea.w-input, textarea.w-select {
 
 body {
   color: #fff;
-  background-color: #1d2228;
+  background-color: #0a0a0a;
   font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 14px;
   line-height: 20px;
@@ -3356,7 +3356,7 @@ a {
 
 .footer__follow-wrap {
   min-height: 56px;
-  background-color: #1d2228;
+  background-color: #0a0a0a;
   border-top: 1px solid #29242a;
   justify-content: center;
   align-items: center;
@@ -3529,7 +3529,7 @@ a {
   max-width: 37.25rem;
   color: #fff;
   text-align: left;
-  background-color: #1d2228;
+  background-color: #0a0a0a;
   border-radius: 10px;
   margin: 0 auto;
   padding: 0;
@@ -3837,7 +3837,7 @@ a {
     z-index: 1;
     width: 100%;
     height: 100%;
-    background-color: #1d2228;
+    background-color: #0a0a0a;
     background-image: radial-gradient(circle farthest-side at -30% 140%, rgba(193, 24, 34, .5), rgba(193, 24, 34, 0) 64%), radial-gradient(circle farthest-side at 130% -40%, rgba(193, 24, 34, .5), rgba(193, 24, 34, 0) 64%), url("https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd78124904073_Noise.png");
     background-position: 0 0, 0 0, 0 0;
     background-size: auto, auto, auto;

@@ -131,7 +131,7 @@ export async function getUserIdByKey(key) {
 export async function getAllDataByUserId(userId) {
     const { data, error } = await supabase
         .from('modelcreate')
-        .select('key, data, created_at')
+        .select('key, data, created_at, userId')
         .eq('userId', userId);
 
     if (error) {
@@ -150,5 +150,30 @@ export async function getAllDataByUserId(userId) {
 
 
 
-
-
+export async function deleteModelFromDatabase(key) {
+    // Delete from Supabase database
+    const { error } = await supabase
+      .from('modelcreate')
+      .delete()
+      .eq('key', key);
+  
+    if (error) {
+      console.error('Error deleting model from the database:', error);
+    }
+  
+    return error;
+  }
+  
+  export async function deleteModelFromStorage(userId, key) {
+    // Delete from Supabase storage
+    const { error } = await supabase.storage
+      .from('modelcreate')
+      .remove([`${userId}/${key}/*`]); // Use wildcard to delete all files in the folder
+  
+    if (error) {
+      console.error('Error deleting model from storage:', error);
+    }
+  
+    return error;
+  }
+  

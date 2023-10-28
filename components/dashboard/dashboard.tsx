@@ -3,6 +3,7 @@ import Header from './header'
 import Footer from '../misc/footer'
 import EmptyStates from './empty-states';
 import { useUserInfo } from '../../hooks/useSession';
+import Modal from 'react-modal';
 
 export default function Dashboard({ session }) {
     const [userId, setUserId] = useState(null);

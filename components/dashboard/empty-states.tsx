@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CardView from './card';
 import AddCardView from './add-card';
 import { getAllDataByUserId } from '../utils/supabase-storage';
+import ConfirmationModal from '../utils/modal';
 
 export default function EmptyStates({ session }) {
     const [filterValue, setFilterValue] = useState('all');
@@ -9,6 +10,7 @@ export default function EmptyStates({ session }) {
     const [userId, setUserId] = useState(null);
     const [email, setEmail] = useState(null);
     const [cardData, setCardData] = useState([]);
+    
 
     useEffect(() => {
         if (session && session.user) {
@@ -57,7 +59,7 @@ export default function EmptyStates({ session }) {
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {cardData.map((card, index) => (
-                    <CardView key={index} data={card}/>
+                    <CardView key={index} data={card} user_id={userId}/>
                 ))}
                 <AddCardView />
             </div>
