@@ -5,11 +5,13 @@ import QRCode from 'react-qr-code';
 import { copyCodeToClipboard } from '../../components/utils/LinkToClipboad';
 import swal from 'sweetalert';
 import { ToastContainer, toast } from 'react-toastify';
+import { useSession } from '../../hooks/useSession';
 
 export default function render() {
     const router = useRouter();
     const [url, setUrl] = useState(null)
     const [loading, setLoading] = useState(false);
+    const { email } = useSession();
     const [post, setPost] = useState({
         url: "",
         title: "",
@@ -50,7 +52,7 @@ export default function render() {
                 {loading ? ( // Conditional rendering based on the loading state
                     <p>Loading...</p>
                 ) : (
-                    <div className='render' style={{backgroundColor:post.color}}>
+                    <div className='render' style={{ backgroundColor: post.color }}>
                         <model-viewer
                             src={post.url["signedUrl"]}
                             alt={post.description}
@@ -62,9 +64,20 @@ export default function render() {
                             shadow-intensity="1"
                             ar-modes="webxr scene-viewer quick-look ar"
                             ar
-                        // poster="/assets/logo.png"
                         >
                         </model-viewer>
+                        <div className="info_container">
+                            <a
+                                // target="_blank"
+                                rel="noreferrer"
+                                className="info_textLink"
+                                href="#"
+                            >
+                                {email && (
+                                    <p className="info_text" style={{ background: "#ffffff", color: "#000000" }}>@{email.split('@')[0]}</p>
+                                )}
+                            </a>
+                        </div>
                         <a href="/" className="header__logo w-inline-block">
                             <img
                                 src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd78124904040_logo.svg"

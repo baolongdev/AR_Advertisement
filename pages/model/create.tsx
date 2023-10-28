@@ -1,80 +1,73 @@
-import { useRouter } from 'next/router';
-import { Leva, button, folder, useControls } from 'leva';
-import { useEffect, useRef, useState } from 'react';
 import { handleFileUpload, readFileContent } from '../../components/editor/utils/fileUtils';
-import { createSafeObjectUrlFromArrayBuffer } from '../../components/editor/utils/create_object_url';
 import { uploadFileDatabase, uploadFileStorage } from '../../components/utils/supabase-storage';
 import { generateRandomFileName } from '../../components/utils/random';
-import { toast } from 'react-toastify';
-import { useSession, useUserInfo } from '../../hooks/useSession';
+import { useSession } from '../../hooks/useSession';
+import React, { useEffect, useState } from 'react'
 import { TwitterPicker } from 'react-color';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
-function createControls(title, description, placement, handleFileUpload, readFileContent) {
-
-}
-
-export default function ModelCreate() {
+export default function test() {
     const router = useRouter();
-    const selectedFile = useRef(null);
-    const fileBlobUrl = useRef(null);
-    const [stateFileBlobUrl, setFileBlobUrl] = useState(null);
-    const userIdRef = useRef("");
-    const emailRef = useRef("");
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [placement, setPlacement] = useState(false);
     const [color, setColor] = useState('');
-    const { session, userId, email } = useSession();
+    const { session, userId: userIdFromSession, email } = useSession();
+    const [userId, setUserId] = useState(null);
+
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [fileBlobUrl, setFileBlobUrl] = useState('');
 
     useEffect(() => {
-        userIdRef.current = userId
-        emailRef.current = email
+        setUserId(userIdFromSession);
+    }, [userIdFromSession]);
+
+    useEffect(() => {
+
     }, [session, userId, email]);
 
     const handleFileInput = () => {
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
         fileInput.style.display = 'none';
-        fileInput.accept = '.glb,.gltf';
+        fileInput.accept = '.glb, .gltf';
 
         fileInput.addEventListener('change', (event) => {
             handleFileUpload(event, async (file) => {
-                selectedFile.current = file;
+                setSelectedFile(file);
                 readFileContent(file, async (fileContent, objectUrl) => {
-                    fileContent.current = fileContent;
-                    fileBlobUrl.current = objectUrl;
-                    setFileBlobUrl(objectUrl)
+                    setFileBlobUrl(objectUrl);
+                    toast.success("Tải lên thành công!");
                 });
             });
         });
         fileInput.click();
     };
-
     const handleCreateLink = async () => {
-        if (!title || !description  === null) {
-            toast.error("Please fill in all the required fields.");
-            return;
-        }
-
-        try {
-            const key = generateRandomFileName();
-            await uploadFileStorage(userIdRef.current, key, selectedFile.current.name, selectedFile.current);
-            const dataForDatabase = {
-                title: title,
-                description: description,
-                placement: placement,
-                color: color,
-            };
-            await uploadFileDatabase(key, userIdRef.current, dataForDatabase);
-
-            toast.success("Tải dữ liệu thành công!");
-
-            setTimeout(() => {
+        // Các trường thông tin được điền đầy đủ.
+        if (title && description && selectedFile !== null) {
+            try {
+                const key = generateRandomFileName();
+                toast.success("Tải dữ liệu thành công!");
+                await uploadFileStorage(userId, key, selectedFile.name, selectedFile);
+                toast.success("1");
+                const dataForDatabase = {
+                    title: title,
+                    description: description,
+                    placement: placement,
+                    color: color,
+                };
+                await uploadFileDatabase(key, userId, dataForDatabase);
+                toast.success("2");
+                toast.success("Đi thôi!");
                 router.push(`/model/${key}`);
-            }, 5000);
-        } catch (error) {
-            toast.warning("Error during file and database upload: " + error);
+            } catch (error) {
+                toast.warning(error);
+            }
+        } else {
+            toast.error("Vui lòng điền đầy đủ thông tin!");
         }
     };
 
@@ -84,9 +77,9 @@ export default function ModelCreate() {
                 <p className="title">Create and Share</p>
             </div>
             <div className="dashboard">
-                <div className={`view border`} style={{backgroundColor:color}}>
+                <div className={`view border`} style={{ backgroundColor: color || 'initial' }}>
                     <model-viewer
-                        src={stateFileBlobUrl}
+                        src={fileBlobUrl}
                         alt={description}
                         title={title}
                         ar-scale="auto"
@@ -95,7 +88,20 @@ export default function ModelCreate() {
                         auto-rotate
                         shadow-intensity="1"
                     />
+                    <div className="info_container">
+                        <a
+                            // target="_blank"
+                            rel="noreferrer"
+                            className="info_textLink"
+                            href="#"
+                        >
+                            {email && (
+                                <p className="info_text" style={{background: "#ffffff", color: "#000000"}}>@{email.split('@')[0]}</p>
+                            )}
+                        </a>
+                    </div>
                 </div>
+
                 <div className="table">
                     <div className="group1 w-full">
                         <div className="">
@@ -152,8 +158,5 @@ export default function ModelCreate() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
-
-
-

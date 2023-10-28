@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { copyCodeToClipboard } from '../utils/LinkToClipboad';
 import { deleteModelFromDatabase, deleteModelFromStorage } from '../utils/supabase-storage';
 
-export default function CardView({ data, maxDescriptionLength = 20, user_id="" }) {
+export default function CardView({ data, maxDescriptionLength = 20, user_id="", updateCardData  }) {
   const handleDuplicateClick = (content) => {
     const baseUrl = window.location.origin;
     const fullUrl = `${baseUrl}/model/${key}`;
@@ -20,6 +20,7 @@ export default function CardView({ data, maxDescriptionLength = 20, user_id="" }
       await deleteModelFromDatabase(data.key);
       console.log('Model deleted successfully');
       toast.success("Model deleted successfully");
+      updateCardData((prevData) => prevData.filter((item) => item.key !== data.key));
     } catch (error) {
       console.error("An error occurred:", error);
       toast.error("An error occurred while deleting the model");

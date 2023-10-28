@@ -3,29 +3,32 @@ import CardView from './card';
 import AddCardView from './add-card';
 import { getAllDataByUserId } from '../utils/supabase-storage';
 import ConfirmationModal from '../utils/modal';
+import { useSession } from '../../hooks/useSession';
 
-export default function EmptyStates({ session }) {
+export default function EmptyStates() {
     const [filterValue, setFilterValue] = useState('all');
     const [sortValue, setSortValue] = useState('date_created');
-    const [userId, setUserId] = useState(null);
-    const [email, setEmail] = useState(null);
     const [cardData, setCardData] = useState([]);
-    
+    const [userId, setUserId] = useState(null);
+    const { session, userId: userIdFromSession, email } = useSession();
 
     useEffect(() => {
-        if (session && session.user) {
-            const user_id = session.user.identities[0].user_id;
-            const user_email = session.user.email;
-            setUserId(user_id);
-            setEmail(user_email);
-        }
+        setUserId(userIdFromSession);
+    }, [userIdFromSession]);
 
-        getAllDataByUserId(userId).then((data) => {
-            if (data) {
-                setCardData(data);
-            }
-        });        
-    }, [session, userId]);
+    useEffect(() => {
+        if (userId) {
+            getAllDataByUserId(userId).then((data) => {
+                if (data) {
+                    setCardData(data);
+                }
+            });
+        }
+    }, [session, userId, email]);
+
+    const updateCardData = (newData) => {
+        setCardData(newData);
+    };
 
     const handleFilterChange = (e) => {
         setFilterValue(e.target.value);
@@ -34,6 +37,11 @@ export default function EmptyStates({ session }) {
     const handleSortChange = (e) => {
         setSortValue(e.target.value);
     };
+
+    if (userId === null) {
+        // Hiển thị một thông báo hoặc trạng thái tải dữ liệu khi userId chưa được thiết lập
+        return <p>Loading...</p>;
+    }
 
     return (
         <div className='content'>
@@ -59,7 +67,7 @@ export default function EmptyStates({ session }) {
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {cardData.map((card, index) => (
-                    <CardView key={index} data={card} user_id={userId}/>
+                    <CardView key={index} data={card} user_id={userId} updateCardData={updateCardData} />
                 ))}
                 <AddCardView />
             </div>

@@ -36,12 +36,29 @@ export default function LoginPage() {
                                     message: 'bg-blue-500 text-white text-sm p-2 mt-2 block rounded-lg'
                                 },
                             }}
-                            providers={['google', 'facebook']}
+                            // providers={['google', 'facebook']}
+                            providers={[]}
                             localization={{
                                 variables: {
+                                    sign_up: {
+                                        email_label: 'Địa chỉ Email',
+                                        password_label: 'Mật khẩu',
+                                        button_label: 'Đăng ký',
+                                        loading_button_label: 'Đang thực hiện!',
+                                        confirmation_text: 'Đăng ký thành công!',
+                                    },
                                     sign_in: {
-                                        email_label: 'Your email address',
-                                        password_label: 'Your strong password',
+                                        email_label: 'Địa chỉ Email',
+                                        password_label: 'Mật khẩu',
+                                        button_label: 'Đăng nhập',
+                                        loading_button_label:'Đang thực hiện!',
+                                    },
+                                    forgotten_password: {
+                                        email_label: 'Địa chỉ Email',
+                                        password_label: 'Mật khẩu',
+                                        button_label: 'Quên mật khẩu',
+                                        loading_button_label: 'Đang gửi!',
+                                        confirmation_text: 'Vào mail để xác nhận!',
                                     },
                                 },
                             }}
@@ -53,6 +70,6 @@ export default function LoginPage() {
         )
     }
     else {
-        return <Dashboard session={session} />;
+        return <Dashboard/>;
     }
 }

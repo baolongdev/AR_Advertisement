@@ -3,7 +3,7 @@ import { getSignedUrlFileStorageByKey } from '../utils/supabase-storage';
 
 export default function showcaseCard({ data, maxDescriptionLength = 20, user_id = "" }) {
   const { key, created_at } = data
-  const { title, description, color } = data.data;
+  const { title, color } = data.data;
   const [src, setSrc] = useState('');
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +30,7 @@ export default function showcaseCard({ data, maxDescriptionLength = 20, user_id 
       </div>
       <a href={`/model/${key}`}>
         <div className='title flex grow items-start gap-2'>
-          <h4>{title}</h4>
+          <h4 className='text-white'>{title}</h4>
         </div>
       </a>
     </div>
