@@ -28,10 +28,11 @@ export default function showcaseCard({ data, maxDescriptionLength = 20, user_id 
           </model-viewer>
         </div>
       </div>
-
-      <div className='title flex grow items-start gap-2'>
-        <h4>{title}</h4>
-      </div>
+      <a href={`/model/${key}`}>
+        <div className='title flex grow items-start gap-2'>
+          <h4>{title}</h4>
+        </div>
+      </a>
     </div>
   )
 }
