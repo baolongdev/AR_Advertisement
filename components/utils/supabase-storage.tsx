@@ -147,6 +147,24 @@ export async function getAllDataByUserId(userId) {
         }
     }
 }
+export async function getAllData() {
+    const { data, error } = await supabase
+        .from('modelcreate')
+        .select('key, data, created_at, userId')
+
+    if (error) {
+        console.error('Lỗi khi truy xuất dữ liệu:', error);
+        return null;
+    } else {
+        if (data && data.length > 0) {
+            console.log('Dữ liệu đã được truy xuất thành công:', data);
+            return data;
+        } else {
+            console.log('Không tìm thấy dữ liệu :');
+            return [];
+        }
+    }
+}
 
 
 

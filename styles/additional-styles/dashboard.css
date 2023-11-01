@@ -50,8 +50,8 @@
     background-color: transparent;
     border: none;
     position: absolute;
-    top: 8px;
-    right: 2px;
+    top: 5px;
+    right: 8px;
     display: flex;
 }
 .cardImage{

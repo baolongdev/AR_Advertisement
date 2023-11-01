@@ -10,17 +10,18 @@ const Header = () => {
     setHumburgerActive((prevActive) => !prevActive);
 
     if (!humburgerActive) {
-      console.log(headerHumburgerCloseRef.current);
       setTimeout(() => {
         if (headerHumburgerCloseRef.current && menuRef.current) {
-          headerHumburgerCloseRef.current.style.overflow = 'hidden';
-          menuRef.current.style.height = '100%';
+          headerHumburgerCloseRef.current.style.display = 'block';
+          menuRef.current.style.display = 'block';
+          menuRef.current.style.opacity = 1;
         }
       }, 300);
     } else {
       if (headerHumburgerCloseRef.current && menuRef.current) {
-        headerHumburgerCloseRef.current.style.overflow = 'auto';
-        menuRef.current.style.height = 'auto';
+        headerHumburgerCloseRef.current.style.display = 'none';
+        menuRef.current.style.display = 'none';
+        menuRef.current.style.opacity = 0;
       }
     }
   };
@@ -42,7 +43,9 @@ const Header = () => {
               <div className="header__col">
                 <a href="#" className="header__logo w-inline-block">
                   <img
-                    src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd78124904040_logo.svg"
+                    height={67}
+                    width={67}
+                    src="assets/Logo.svg"
                     loading="eager"
                     alt=""
                     className="logo-img"

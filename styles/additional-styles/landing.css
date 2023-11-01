@@ -2092,7 +2092,7 @@ h1 {
   margin-top: 0;
   margin-bottom: 40px;
   font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 98px;
+  font-size: 98px !important;
   font-weight: 700;
   line-height: 1em;
 }
@@ -4043,7 +4043,7 @@ a {
 
   .hero__heading {
     margin-bottom: 40px;
-    font-size: 52px;
+    font-size: 52px !important;
   }
 
   .hero__over-heading {

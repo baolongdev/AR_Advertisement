@@ -74,7 +74,11 @@ export default function test() {
     return (
         <div className='modelcreate'>
             <div className="header">
-                <p className="title">Create and Share</p>
+                <p className="title">Dự án:
+                    <span className='bg-white rounded-md text-black mx-3 px-3'>
+                        {title.length > 10 ? title.slice(0, 10) + '...' : title}
+                    </span>
+                </p>
             </div>
             <div className="dashboard">
                 <div className={`view border`} style={{ backgroundColor: color || 'initial' }}>
@@ -96,7 +100,7 @@ export default function test() {
                             href="#"
                         >
                             {email && (
-                                <p className="info_text" style={{background: "#ffffff", color: "#000000"}}>@{email.split('@')[0]}</p>
+                                <p className="info_text" style={{ background: "#ffffff", color: "#000000" }}>@{email.split('@')[0]}</p>
                             )}
                         </a>
                     </div>

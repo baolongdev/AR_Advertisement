@@ -32,17 +32,18 @@ function Footer() {
           <div className="footer__col col--1">
             <a href="#" className="footer__logo w-inline-block">
               <img
-                src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd78124904040_logo.svg"
+                src="/assets/Logo.png"
                 loading="eager"
                 alt=""
                 className="logo-img"
+                height={84}
+                width={84}
               />
             </a>
             <div className="footer__desc">
               . . .<br />
-              BẢO TÀNG SỐ 3D
+              AR_Advertisement
               <br />
-              E-MUSEUM
             </div>
           </div>
           <div className="footer__col col--2">

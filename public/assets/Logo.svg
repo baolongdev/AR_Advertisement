@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #231f20;
+        font-family: Quicksand-Bold, Quicksand;
+        font-size: 450px;
+        font-weight: 700;
+        letter-spacing: .4em;
+      }
+    </style>
+  </defs>
+  <rect class="cls-1" x="-.67" width="1024" height="1024"/>
+  <text class="cls-2" transform="translate(124.11 444.34)"><tspan x="0" y="0">AR</tspan><tspan x="0" y="450">AD</tspan></text>
+</svg>

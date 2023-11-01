@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getSignedUrlFileStorageByKey } from '../utils/supabase-storage';
 
-export default function showcaseCard({ data, maxDescriptionLength = 20, user_id = "" }) {
+export default function showcaseCard({ data, maxDescriptionLength = 20}) {
   const { key, created_at } = data
   const { title, color } = data.data;
   const [src, setSrc] = useState('');
@@ -26,6 +26,11 @@ export default function showcaseCard({ data, maxDescriptionLength = 20, user_id 
             shadow-intensity="1"
           >
           </model-viewer>
+          <div className="info_container">
+            <p className="info_text" style={{ background: "#ffffff", color: "#000000" }}>@{"longle12@".split('@')[0]}</p>
+            {/* {email && (
+              )} */}
+          </div>
         </div>
       </div>
       <a href={`/model/${key}`}>

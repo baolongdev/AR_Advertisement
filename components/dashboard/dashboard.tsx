@@ -14,7 +14,7 @@ export default function Dashboard() {
             <section id="dashboard" className="section section--hero">
                 <EmptyStates/>
             </section>
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

@@ -6,7 +6,7 @@ export default function AddCardView() {
             <a href="/model" className='Panels'>
                 <div className="newWidget">
                     <div className="newWidgetBtn">
-                        <span>+</span> Add new widget
+                        <span>+</span> Tạo dự án mới
                     </div>
                 </div>
             </a>

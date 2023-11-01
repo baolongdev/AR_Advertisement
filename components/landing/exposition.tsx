@@ -31,8 +31,8 @@ function Exposition() {
         {/* Content */}
         <div className="visit__content max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6">
           <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
-            <h3>Tính năng nổi bật</h3>
-            <p className="text-xl text-gray-600">Take your workflow to the next level and make quick capture actually quick</p>
+            <h2 className="text-5xl sm:text-6xl md:pt-12 xl:pt-0">Tính năng nổi bật</h2>
+            <p className="text-xl large mb-8 mt-3">Take your workflow to the next level and make quick capture actually quick</p>
             {/* Tabs buttons */}
             <div className="visit__datas mb-8 md:mb-0">
               {tabsContent.map((tab, index) => (

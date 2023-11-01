@@ -6,8 +6,8 @@ import ConfirmationModal from '../utils/modal';
 import { useSession } from '../../hooks/useSession';
 
 export default function EmptyStates() {
-    const [filterValue, setFilterValue] = useState('all');
-    const [sortValue, setSortValue] = useState('date_created');
+    const [filterValue, setFilterValue] = useState('Tất cả');
+    const [sortValue, setSortValue] = useState('Ngày tạo');
     const [cardData, setCardData] = useState([]);
     const [userId, setUserId] = useState(null);
     const { session, userId: userIdFromSession, email } = useSession();
@@ -46,21 +46,21 @@ export default function EmptyStates() {
     return (
         <div className='content'>
             <div className="mb-10 flex justify-between items-center">
-                <h3 className='sm:text-4xl text-2xl mb-0'>My Widgets</h3>
+                <h3 className='sm:text-4xl text-2xl mb-0'>Dự án của tôi</h3>
                 <div className="filterSort">
                     <div className="filter">
-                        <span>Filter by: </span>
+                        <span>Lọc: </span>
                         <select value={filterValue} onChange={handleFilterChange}>
-                            <option value="all">All</option>
+                            <option value="all">Tất cả</option>
                             <option value="clock">Clock</option>
                         </select>
                     </div>
-                    <div className="filter">
-                        <span>Sort by: </span>
+                    <div className="filter ml-5">
+                        <span>Sắp xếp theo: </span>
                         <select value={sortValue} onChange={handleSortChange}>
-                            <option value="date_created">Date Created</option>
-                            <option value="last_viewed">Last Viewed</option>
-                            <option value="alphabetical">Alphabetical (by Widget)</option>
+                            <option value="date_created">Ngày tạo</option>
+                            <option value="last_viewed">Xem lần cuối</option>
+                            <option value="alphabetical">A - Z</option>
                         </select>
                     </div>
                 </div>
