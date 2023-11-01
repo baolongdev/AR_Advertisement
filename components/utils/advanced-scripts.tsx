@@ -12,6 +12,12 @@ const AdvancedScripts = () => {
         type='module'
         src='https://unpkg.com/@google/model-viewer@^2.1.1/dist/model-viewer.min.js'
       />
+      <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KFVFPMMQ"
+          height="0" width="0" 
+          className='hidden'>
+        </iframe>
+      </noscript>
     </div>
   );
 };
