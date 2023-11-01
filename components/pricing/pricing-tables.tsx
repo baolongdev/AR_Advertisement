@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 function PricingTables() {
-  const [annual, setAnnual] = useState<boolean>(true);
+  const [annual, setAnnual] = useState<boolean>(false);
   const [plans] = useState([
     {
       name: "Starter",
@@ -53,20 +53,20 @@ function PricingTables() {
   ]);
 
   return (
-    <section className="bg-gradient-to-b from-white to-gray-100">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section className="section">
+      <div className="content max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12">
-            <h1 className="h1 mb-4" data-aos="zoom-y-out">
-              All Essentials Covered, Zero Cost
-            </h1>
+            <h2 className="mx-auto max-w-sm text-5xl font-bold md:mx-0 md:max-w-none md:text-6xl" data-aos="zoom-y-out">
+              Chọn gói của bạn
+            </h2>
             <p
-              className="text-xl text-gray-600"
+              className="text-xl text-gray-400 mt-5"
               data-aos="zoom-y-out"
               data-aos-delay="150"
             >
-              Our free plan offers all you need to sync and link effortlessly with Obsidian. Subscribe to login from anywhere.
+              Gói miễn phí của chúng tôi cung cấp tất cả những gì bạn cần
             </p>
           </div>
 
@@ -140,8 +140,8 @@ function PricingTables() {
                       </div>
                     )}
                     <div className="mb-4">
-                      <div className="text-lg font-bold mb-1">{plan.name}</div>
-                      <div className="inline-flex items-baseline mb-2">
+                      <div className="text-lg font-bold mb-1 text-black">{plan.name}</div>
+                      <div className="inline-flex items-baseline mb-2 text-black">
                         <span className="text-3xl font-bold">
                           {(annual)
                             ? plan.annualPrice[0]

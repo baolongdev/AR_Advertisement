@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { getSignedUrlFileStorageByKey } from '../utils/supabase-storage';
 
-export default function showcaseCard({ data, maxDescriptionLength = 20}) {
+export default function showcaseCard({ data, maxDescriptionLength = 20 }) {
   const { key, created_at } = data
-  const { title, color } = data.data;
+  const { title, description, color, email } = data.data;
   const [src, setSrc] = useState('');
   useEffect(() => {
     const fetchData = async () => {
@@ -27,15 +27,16 @@ export default function showcaseCard({ data, maxDescriptionLength = 20}) {
           >
           </model-viewer>
           <div className="info_container">
-            <p className="info_text" style={{ background: "#ffffff", color: "#000000" }}>@{"longle12@".split('@')[0]}</p>
-            {/* {email && (
-              )} */}
+            {email && (
+              <p className="info_text" style={{ background: "#ffffff", color: "#000000" }}>@{"longle12@".split('@')[0]}</p>
+            )}
           </div>
         </div>
       </div>
       <a href={`/model/${key}`}>
-        <div className='title flex grow items-start gap-2'>
+        <div className='title flex flex-col grow items-start gap-2'>
           <h4 className='text-white'>{title}</h4>
+          <h4 className='text-white'>{description.length > 20 ? description.slice(0, 20) + '...' : description}</h4>
         </div>
       </a>
     </div>

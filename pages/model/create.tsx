@@ -58,6 +58,7 @@ export default function test() {
                     description: description,
                     placement: placement,
                     color: color,
+                    email: email,
                 };
                 await uploadFileDatabase(key, userId, dataForDatabase);
                 toast.success("2");
