@@ -2,12 +2,15 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { copyCodeToClipboard } from '../utils/LinkToClipboad';
 import { deleteModelFromDatabase, deleteModelFromStorage } from '../utils/supabase-storage';
+import { useRouter } from 'next/router';
 
 export default function CardView({ data, maxDescriptionLength = 20, user_id="", updateCardData  }) {
+  const router = useRouter();
   const handleDuplicateClick = (content) => {
     const baseUrl = window.location.origin;
     const fullUrl = `${baseUrl}/model/${key}`;
     copyCodeToClipboard(fullUrl)
+    router.push(`/analysis/${key}`);
   };
   const handleDeleteClick = async () => {
     const confirmation = window.confirm("Are you sure you want to delete this model?");

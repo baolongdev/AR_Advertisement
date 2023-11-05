@@ -11,6 +11,7 @@
 #modelview .info_container {
   margin-right: 1rem !important;
   margin-bottom: 4.45rem !important;
+  z-index:-1;
 }
 
 .render {

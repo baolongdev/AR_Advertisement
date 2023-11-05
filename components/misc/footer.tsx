@@ -32,7 +32,7 @@ function Footer() {
           <div className="footer__col col--1">
             <a href="#" className="footer__logo w-inline-block">
               <img
-                src="/assets/Logo.png"
+                src="assets/Logo.svg"
                 loading="eager"
                 alt=""
                 className="logo-img"

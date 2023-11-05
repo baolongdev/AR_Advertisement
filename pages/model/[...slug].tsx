@@ -87,7 +87,7 @@ export default function render() {
 
                         <a href="/" className="header__logo w-inline-block">
                             <img
-                                src="/assets/Logo.png"
+                                src="assets/Logo.svg"
                                 loading="eager"
                                 alt=""
                                 width={64}
