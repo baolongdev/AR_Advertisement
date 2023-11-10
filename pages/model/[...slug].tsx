@@ -78,7 +78,7 @@ export default function render() {
                                 className="info_textLink"
                                 href="#"
                             >
-                                
+
                                 {post.email && (
                                     <p className="info_text" style={{ background: "#ffffff", color: "#000000" }}>@{post.email.split('@')[0]}</p>
                                 )}
@@ -87,10 +87,11 @@ export default function render() {
 
                         <a href="/" className="header__logo w-inline-block">
                             <img
-                                src="assets/Logo.svg"
+                                height={67}
+                                width={67}
+                                src="../assets/Logo.svg"
                                 loading="eager"
                                 alt=""
-                                width={64}
                                 className="logo-img"
                             />
                         </a>

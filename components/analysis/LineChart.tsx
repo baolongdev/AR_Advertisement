@@ -100,4 +100,3 @@ export default function LineChart({ data, dateSelect }) {
         )
     }
 }
-

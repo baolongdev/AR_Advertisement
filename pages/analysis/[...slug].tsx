@@ -151,16 +151,18 @@ export default function render() {
                 ) : (
                     <>
                         <div className="header flex sm:!flex-row !flex-col gap-5">
-                            <a className='hover:left-4 transition duration-150 ease-in-out cursor-pointer'
-                                href='/account'
-                            >
-                                <span className="btn__ico rotate-180">&nbsp;</span>
-                            </a>
-                            <p className="title">Dự án:
-                                <span className='bg-white rounded-md text-black mx-3 px-3'>
-                                    {post.title.length > 10 ? post.title.slice(0, 20) + '...' : post.title}
-                                </span>
-                            </p>
+                            <div className='flex flex-row items-center gap-5 w-full'>
+                                <a className='hover:left-4 transition duration-150 ease-in-out cursor-pointer'
+                                    href='/account'
+                                >
+                                    <span className="btn__ico rotate-180">&nbsp;</span>
+                                </a>
+                                <p className="title whitespace-nowrap !text-xl sm:!text-3xl">Dự án:
+                                    <span className='bg-white rounded-md text-black mx-3 px-3 text-ellipsis whitespace-nowrap'>
+                                        {post.title.length > 10 ? post.title.slice(0, 20) + '...' : post.title}
+                                    </span>
+                                </p>
+                            </div>
                             <div className="filterSort flex">
                                 <div className="filter">
                                     <select value={filterValue} onChange={handleFilterChange}>
@@ -177,7 +179,7 @@ export default function render() {
                                 </div>
                             </div>
                         </div>
-                        <div className="dashboard">
+                        <div className="dashboard max-sm:!p-0 max-sm:!pt-10 pt-10 gap-5">
                             <div className="page_chart">
                                 <div className="tabs_wrapper">
                                     <div className="tabs_scroll-container">

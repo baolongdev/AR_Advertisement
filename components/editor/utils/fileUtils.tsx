@@ -21,6 +21,21 @@ export function handleFileUpload(event, callback) {
     }
 }
 
+export function handleFileUploads(event, callback) {
+    const files = event.target.files;
+
+    if (files.length > 0) {
+        const invalidFiles = Array.from(files).filter(file => !isFileValid(file));
+
+        if (invalidFiles.length === 0) {
+            callback(files);
+        } else {
+            alert('Kích thước không hợp lệ.');
+        }
+    }
+};
+
+
 export async function readFileContent(file, callback) {
     const arrayBuffer = await file.arrayBuffer();
     const objectUrl = createSafeObjectUrlFromArrayBuffer(arrayBuffer);

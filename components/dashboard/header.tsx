@@ -31,7 +31,7 @@ export default function Header({ user_email }) {
     { text: "Help", href: "/help" },
   ];
 
-  
+
   return (
     <>
       <header className="header">
@@ -41,7 +41,9 @@ export default function Header({ user_email }) {
               <div className="header__col">
                 <a href="/" className="header__logo w-inline-block">
                   <img
-                    src="https://uploads-ssl.webflow.com/651c348dccebd78124903fb3/651c348dccebd78124904040_logo.svg"
+                    height={67}
+                    width={67}
+                    src="assets/Logo.svg"
                     loading="eager"
                     alt=""
                     className="logo-img"
