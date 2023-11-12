@@ -1,21 +1,20 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "module": "esnext",
+    "jsx": "preserve",
+    "strict": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
     "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "forceConsistentCasingInFileNames": true,
-    
+    "incremental": true
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/model/index.js", "src/types/model-viewer.d.ts", ".env", "components/utils/supabase-storage.tsx"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/simple/utils/transitions.jsx", "src/types/model-viewer.d.ts"]
 }

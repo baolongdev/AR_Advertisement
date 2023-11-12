@@ -1,37 +1,8 @@
-import { useRef, useState } from 'react';
-import Link from 'next/link';
-import Cookies from 'js-cookie';
-
 export default function Header({ user_email }) {
-  const [humburgerActive, setHumburgerActive] = useState(false);
-  const headerHumburgerCloseRef = useRef(null);
-  const menuRef = useRef(null);
-
-  const toggleHumburger = () => {
-    setHumburgerActive((prevActive) => !prevActive);
-
-    if (!humburgerActive) {
-      console.log(headerHumburgerCloseRef.current);
-      setTimeout(() => {
-        if (headerHumburgerCloseRef.current && menuRef.current) {
-          headerHumburgerCloseRef.current.style.overflow = 'hidden';
-          menuRef.current.style.height = '100%';
-        }
-      }, 300);
-    } else {
-      if (headerHumburgerCloseRef.current && menuRef.current) {
-        headerHumburgerCloseRef.current.style.overflow = 'auto';
-        menuRef.current.style.height = 'auto';
-      }
-    }
-  };
-
   const navLinks = [
     { text: "Account", href: "/account" },
     { text: "Help", href: "/help" },
   ];
-
-
   return (
     <>
       <header className="header">
@@ -68,11 +39,6 @@ export default function Header({ user_email }) {
                       {link.text}
                     </a>
                   ))}
-                  {/* <a href="#" className="-m-1.5 p-1.5"
-                    onClick={}
-                  >
-                    <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
-                  </a> */}
                 </nav>
               </div>
             </div>

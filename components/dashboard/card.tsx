@@ -6,6 +6,13 @@ import { useRouter } from 'next/router';
 
 export default function CardView({ data, maxDescriptionLength = 20, user_id="", updateCardData  }) {
   const router = useRouter();
+  const { key, created_at } = data
+  const { title, description, color } = data.data;
+
+  const truncatedDescription = description.length > maxDescriptionLength
+    ? `${description.slice(0, maxDescriptionLength)}...`
+    : description;
+  // copy link and go to analysis
   const handleDuplicateClick = (content) => {
     const baseUrl = window.location.origin;
     const fullUrl = `${baseUrl}/model/${key}`;
@@ -13,39 +20,32 @@ export default function CardView({ data, maxDescriptionLength = 20, user_id="", 
     router.push(`/analysis/${key}`);
   };
   const handleDeleteClick = async () => {
-    const confirmation = window.confirm("Are you sure you want to delete this model?");
+    const confirmation = window.confirm("Bạn có chắc chắn muốn xóa mô hình này?");
     if (!confirmation) {
       return;
     }
-
     try {
       await deleteModelFromStorage(user_id, data.key)
       await deleteModelFromDatabase(data.key);
       console.log('Model deleted successfully');
-      toast.success("Model deleted successfully");
+      toast.success("Xóa thành công!");
       updateCardData((prevData) => prevData.filter((item) => item.key !== data.key));
     } catch (error) {
       console.error("An error occurred:", error);
-      toast.error("An error occurred while deleting the model");
+      toast.error("Đã xảy ra lỗi khi xóa!");
     }
   };
   
-  const { key, created_at } = data
-  const { title, description, color } = data.data;
-  const truncatedDescription = description.length > maxDescriptionLength
-    ? `${description.slice(0, maxDescriptionLength)}...`
-    : description;
-
-  const currentDate = new Date();
-  const createdAtDate = new Date(created_at);
-  const timeDifference = currentDate.getTime() - createdAtDate.getTime();
-
-  // Calculate the number of days and weeks
-  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  const weeksDifference = Math.floor(daysDifference / 7);
-
-  // Display weeks if the difference is at least a week, otherwise display days
-  const formattedTimeDifference = weeksDifference >= 1 ? `${weeksDifference} weeks` : `${daysDifference} days`;
+  function calculateTimeDifference(createdAt) {
+    const currentDate = new Date();
+    const createdAtDate = new Date(createdAt);
+    const timeDifference = currentDate.getTime() - createdAtDate.getTime();
+  
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const weeksDifference = Math.floor(daysDifference / 7);
+  
+    return weeksDifference >= 1 ? `${weeksDifference} weeks` : `${daysDifference} days`;
+  }
 
   return (
     <div className="cardview">
@@ -56,8 +56,8 @@ export default function CardView({ data, maxDescriptionLength = 20, user_id="", 
             <div className="cardTitleContainer">
               <h2 className="cardTitle">{title}</h2>
             </div>
-            <p className="cardText">{description}</p>
-            <p className="cardTextNonCap">Created: {formattedTimeDifference}</p>
+            <p className="cardText">{truncatedDescription}</p>
+            <p className="cardTextNonCap">Created: {calculateTimeDifference(created_at)}</p>
           </div>
           <div style={{ height: 40, width: 84 }} />
         </div>

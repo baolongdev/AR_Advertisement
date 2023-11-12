@@ -1,47 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import CardView from './card';
+import React, { useState } from 'react'
+import { Select, SelectItem } from "@tremor/react";
 import AddCardView from './add-card';
-import { getAllDataByUserId } from '../utils/supabase-storage';
-import ConfirmationModal from '../utils/modal';
-import { useSession } from '../../hooks/useSession';
+import ListProject from './list-project';
+
 
 export default function EmptyStates() {
     const [filterValue, setFilterValue] = useState('Tất cả');
     const [sortValue, setSortValue] = useState('Ngày tạo');
-    const [cardData, setCardData] = useState([]);
-    const [userId, setUserId] = useState(null);
-    const { session, userId: userIdFromSession, email } = useSession();
-
-    useEffect(() => {
-        setUserId(userIdFromSession);
-    }, [userIdFromSession]);
-
-    useEffect(() => {
-        if (userId) {
-            getAllDataByUserId(userId).then((data) => {
-                if (data) {
-                    setCardData(data);
-                }
-            });
-        }
-    }, [session, userId, email]);
-
-    const updateCardData = (newData) => {
-        setCardData(newData);
-    };
-
-    const handleFilterChange = (e) => {
-        setFilterValue(e.target.value);
-    };
-
-    const handleSortChange = (e) => {
-        setSortValue(e.target.value);
-    };
-
-    if (userId === null) {
-        // Hiển thị một thông báo hoặc trạng thái tải dữ liệu khi userId chưa được thiết lập
-        return <p>Loading...</p>;
-    }
 
     return (
         <div className='content'>
@@ -50,27 +15,33 @@ export default function EmptyStates() {
                 <div className="filterSort">
                     <div className="filter">
                         <span>Lọc: </span>
-                        <select value={filterValue} onChange={handleFilterChange}>
-                            <option value="all">Tất cả</option>
-                            <option value="clock">Clock</option>
-                        </select>
+                        <Select value={filterValue} onValueChange={setFilterValue}>
+                            <SelectItem value="all">
+                                Tất cả
+                            </SelectItem>
+                        </Select>
                     </div>
-                    <div className="filter ml-5">
-                        <span>Sắp xếp theo: </span>
-                        <select value={sortValue} onChange={handleSortChange}>
-                            <option value="date_created">Ngày tạo</option>
-                            <option value="last_viewed">Xem lần cuối</option>
-                            <option value="alphabetical">A - Z</option>
-                        </select>
+                    <div className="filter">
+                        <span>Lọc: </span>
+                        <Select value={sortValue} onValueChange={setSortValue}>
+                            <SelectItem value="date_created">
+                                Ngày tạo
+                            </SelectItem>
+                            <SelectItem value="last_viewed">
+                                Xem lần cuối
+                            </SelectItem>
+                            <SelectItem value="alphabetical">
+                                A - Z
+                            </SelectItem>
+                        </Select>
                     </div>
                 </div>
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-                {cardData.map((card, index) => (
-                    <CardView key={index} data={card} user_id={userId} updateCardData={updateCardData} />
-                ))}
+                <ListProject/>
                 <AddCardView />
             </div>
         </div>
-    );
+    )
 }
+

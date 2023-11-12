@@ -10,14 +10,8 @@ const AdvancedScripts = () => {
         async
         strategy='afterInteractive'
         type='module'
-        src='https://unpkg.com/@google/model-viewer@^2.1.1/dist/model-viewer.min.js'
+        src='https://unpkg.com/@google/model-viewer@^3.3.0/dist/model-viewer.min.js'
       />
-      <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KFVFPMMQ"
-          height="0" width="0" 
-          className='hidden'>
-        </iframe>
-      </noscript>
     </div>
   );
 };

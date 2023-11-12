@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getSignedUrlFileStorageByKey } from '../utils/supabase-storage';
+import InfoContainer from '../model/info-container';
 
 export default function showcaseCard({ data, maxDescriptionLength = 20 }) {
   const { key, created_at } = data
@@ -22,15 +23,11 @@ export default function showcaseCard({ data, maxDescriptionLength = 20 }) {
             ar-scale="auto"
             camera-controls
             touch-action="pan-y"
-            auto-rotate
             shadow-intensity="1"
+            ar-modes="webxr scene-viewer quick-look"
           >
           </model-viewer>
-          <div className="info_container">
-            {email && (
-              <p className="info_text" style={{ background: "#ffffff", color: "#000000" }}>@{"longle12@".split('@')[0]}</p>
-            )}
-          </div>
+          <InfoContainer email={email}/>
         </div>
       </div>
       <a href={`/model/${key}`}>

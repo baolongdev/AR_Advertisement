@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react'
 import Header from './header'
-import Footer from '../misc/footer'
+import { useSession } from '../../hooks/useSession';
 import EmptyStates from './empty-states';
-import { useSession, useUserInfo } from '../../hooks/useSession';
-import Modal from 'react-modal';
 
 export default function Dashboard() {
-    const { session, email } = useSession();
-
+    const { email } = useSession();
     return (
         <>
             <Header user_email={email} />

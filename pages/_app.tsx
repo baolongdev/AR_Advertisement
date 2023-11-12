@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { DefaultSeo } from 'next-seo'
@@ -5,11 +6,10 @@ import SEO from '../next-seo.config';
 import { AppProps } from 'next/app'
 import '../styles/index.css'
 import posthog from 'posthog-js';
-import AdvancedScripts from '../components/utils/advanced-scripts';
 import { Analytics } from '@vercel/analytics/react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Modal from 'react-modal';
+import AdvancedScripts from '../components/utils/advanced-scripts';
 
 function setupPostHog() {
   // setup posthog
@@ -28,8 +28,6 @@ function setupPostHog() {
   }, []);
 
 }
-
-Modal.setAppElement('body');
 export default function MyApp({ Component, pageProps }: AppProps) {
   setupPostHog();
   return (

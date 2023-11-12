@@ -4,7 +4,7 @@ export declare global {
       "model-viewer": React.DetailedHTMLProps<
         React.AllHTMLAttributes<
           Partial<globalThis.HTMLElementTagNameMap['model-viewer']>
-        > & { ar?: boolean }, // Thêm thuộc tính "ar" vào đây
+        > & { ar?: boolean } & { autoplay?: boolean },
         Partial<globalThis.HTMLElementTagNameMap['model-viewer']>
       >;
     }

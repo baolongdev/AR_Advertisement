@@ -18,7 +18,7 @@ export default function Intro() {
                         {/* về{" "} */}
                         <span className="relative whitespace-nowrap">
                             AR ADVERTISING
-                            <img
+                            {/* <img
                                 alt=""
                                 srcSet="/assets/landingPage/squiggle.png"
                                 src="/assets/landingPage/squiggle.png"
@@ -29,11 +29,11 @@ export default function Intro() {
                                 className="absolute right-0 bottom-[-10px] w-full"
                                 loading="lazy"
                                 style={{ color: "transparent" }}
-                            />
+                            /> */}
                         </span>
                     </h2>
                     <p className="mt-8 text-base sm:text-lg">
-                    Trong ngành thương mại điện tử hiện nay chưa chú trọng trong việc áp dụng công nghệ AR, vào kinh doanh, buôn bán sản phẩm. Vì thế, dịch vụ của chúng tôi là một ưu điểm vượt trội về công nghệ so với các các đối thủ khác trong cùng lĩnh vực
+                        Trong ngành thương mại điện tử hiện nay chưa chú trọng trong việc áp dụng công nghệ AR, vào kinh doanh, buôn bán sản phẩm. Vì thế, dịch vụ của chúng tôi là một ưu điểm vượt trội về công nghệ so với các các đối thủ khác trong cùng lĩnh vực
                     </p>
                 </div>
                 <div className="mx-auto flex w-full max-w-sm flex-col gap-4 font-semibold md:mb-28 md:max-w-none md:flex-row">
@@ -64,14 +64,12 @@ export default function Intro() {
                                 style={{ color: "transparent" }}
                             />
                             <h4 className="w-full text-2xl text-black">
-                                3D objects <br />
-                                from 2D images
+                                Sáng tạo
                             </h4>
                         </div>
                         <div className="relative z-10 flex h-56 w-full flex-col items-center justify-between rounded-2xl border-white bg-gray-100 p-4 text-trypan-blue-900 drop-shadow sm:p-6 md:h-72 md:p-8">
                             <h4 className="w-full text-2xl text-black">
-                                Production-ready <br />
-                                models in minutes
+                                Mới mẻ
                             </h4>
                             <img
                                 alt=""
@@ -103,10 +101,14 @@ export default function Intro() {
                                 loading="lazy"
                                 style={{ color: "transparent" }}
                             />
-                            <h4 className="text-2xl ">Scale your team instantly</h4>
+                            <h4 className="text-2xl ">
+                                Độc đáo
+                            </h4>
                         </div>
                         <div className="relative z-10 flex h-56 w-full flex-col items-center justify-between rounded-2xl border-white bg-gray-100 p-4 text-trypan-blue-900 drop-shadow sm:p-6 md:h-72 md:p-8">
-                            <h4 className="text-2xl text-black">Plugins for your favorite tools</h4>
+                            <h4 className="text-2xl text-black">
+                                Tiện lợi
+                                </h4>
                             <img
                                 alt=""
                                 srcSet="/_next/image?url=%2Fassets%2Ffeature-images%2Fplugins.png&w=1080&q=75 1x, /_next/image?url=%2Fassets%2Ffeature-images%2Fplugins.png&w=3840&q=75 2x"

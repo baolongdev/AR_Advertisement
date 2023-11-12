@@ -1,31 +1,27 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
-
-import { getData, getOverview, getTimeseries } from '../../hooks/useVercelApi';
-import RenderTabelAnalytics from '../../components/analysis/renderTabelAnalytics'
-import { toast } from 'react-toastify';
-import LineChart from '../../components/analysis/LineChart';
-import { getDataDatabaseByKey } from '../../components/utils/supabase-storage';
-
+import { getSignedUrlFileStorageByKey, getDataDatabaseByKey } from '../../components/utils/supabase-storage';
+import { DateRangePickerValue, Select, SelectItem } from "@tremor/react";
+import DateRangePickerComp, { getDateAgo } from '../../components/analysis/DateRangePicker';
+import analyticsVercelApi from '../api/analyticsVercelApi';
+import AreaChartVisul from '../../components/analysis/AreaChartVisul';
+import ListBarVisul from '../../components/analysis/ListBarVisul';
 
 
 export default function render() {
     const router = useRouter();
-    const key = router.query.slug;
+    const [loading, setLoading] = useState(false);
+
 
     const [filterValue, setFilterValue] = useState('Tất cả');
-    const [dateSelect, setDateSelect] = useState("");
+    const [dateSelect, setDateSelect] = useState({
+        from: getDateAgo(1),
+        to: new Date(),
+        selectValue: "24h"
+    });
+    const [selectValue, setSelectValue] = useState("24h")
 
-    const [overview, setOverviewLoading] = useState(false);
-    const [timeseries, setTimeseriesLoading] = useState(false);
-    const [path, setPathLoading] = useState(false);
-    const [referrer, setReferrerLoading] = useState(false);
-    const [country, setCountryLoading] = useState(false);
-    const [os_name, setOs_nameLoading] = useState(false);
-    const [client_name, setClient_nameLoading] = useState(false);
-
-    const [loading, setLoading] = useState(false);
-    const [post, setPost] = useState({
+    const [dataRender, setDataRender] = useState({
         url: "",
         title: "",
         description: "",
@@ -34,119 +30,76 @@ export default function render() {
         placement: false,
         fileContent: false,
     });
-
-
-    // Hằng số
-    const top_name = 'client_name';
-    const environment = 'production';
-    const filter = { "path": { "values": [`/model/${key}`], "operator": "eq" } };
-    const projectId = 'ar-advertisement';
-
-    const handleFilterChange = (e) => {
-        setFilterValue(e.target.value);
-    };
-
-    const handleSortChange = (e) => {
-        setDateSelect(e.target.value);
-        toast.success("Dữ liệu đang được cập nhật!");
-    };
     useEffect(() => {
         const fetchData = async () => {
             const key = router.query.slug;
 
             if (key) {
-                getDataDatabaseByKey(key[0]).then((data) => {
+                try {
+                    setLoading(true);
+
+                    const fileUrl = await getSignedUrlFileStorageByKey(key[0]);
+                    const data = await getDataDatabaseByKey(key[0]);
+
                     if (data) {
-                        console.log(data);
-                        setPost({ ...data }); // Set the 'url' property
-                        setLoading(false);
-                    } else {
-                        setLoading(true);
+                        setDataRender({ ...data, url: fileUrl });
                     }
-                });
+
+                    setLoading(false);
+                } catch (error) {
+                    console.error("Failed to fetch data", error);
+                    setLoading(false);
+                }
             }
         };
+
         fetchData();
     }, [router.query.slug]);
 
 
-    const { data: overviewData, loading: overviewLoading, error: overviewError } = getOverview(
-        environment,
-        dateSelect,
-        projectId,
-        2500,
-        filter
-    );
-
+    const [dataResponseAll, setDataResponseAll] = useState<any>({});
     useEffect(() => {
-        setOverviewLoading(overviewData);
-        setTimeseriesLoading(timeseriesData);
-        setPathLoading(pathData);
-        setReferrerLoading(referrerData);
-        setCountryLoading(countryData);
-        setOs_nameLoading(os_nameData);
-        setClient_nameLoading(client_nameData);
-    }, [dateSelect, filterValue
-        ,overview
-        ,timeseries
-        ,path
-        ,referrer
-        ,country
-        ,os_name
-        ,client_name])
+        const fetchProductList = async () => {
+            const { from, to, selectValue } = dateSelect
+            setSelectValue(selectValue)
+            const key = router.query.slug;
+            if (!from || !to || !key) {
+                return;
+            }
 
-    const { data: timeseriesData } = getTimeseries(
-        environment,
-        dateSelect,
-        projectId,
-        2500,
-        filter
-    );
-    const { data: pathData, loading: pathLoading, error: pathError } = getData(
-        "path",
-        environment,
-        dateSelect,
-        projectId,
-        2500,
-        filter
-    );
-    const { data: referrerData, loading: referrerLoading, error: referrerError } = getData(
-        "referrer",
-        environment,
-        dateSelect,
-        projectId,
-        2500,
-        filter
-    );
-    const { data: countryData, loading: countryLoading, error: countryError } = getData(
-        "country",
-        environment,
-        dateSelect,
-        projectId,
-        2500,
-        filter
-    );
-    const { data: os_nameData, loading: os_nameLoading, error: os_nameError } = getData(
-        "os_name",
-        environment,
-        dateSelect,
-        projectId,
-        2500,
-        filter
-    );
-    const { data: client_nameData, loading: client_nameLoading, error: client_nameError } = getData(
-        "client_name",
-        environment,
-        dateSelect,
-        projectId,
-        2500,
-        filter
-    );
+            const params = {
+                "environment": "production",
+                "filter": JSON.stringify({ "path": { "values": [`/model/${key}`], "operator": "eq" } }),
+                "limit": 250,
+                "projectId": "ar-advertisement",
+                "from": from.toISOString(),
+                "to": to.toISOString(),
+            }
+
+            try {
+                const responseAll = await analyticsVercelApi.getAll(params);
+                const allResponses = await Promise.all(
+                    Object.values(responseAll).map(promise => promise.then(response => response.data))
+                );
+                const updatedProductList = Object.keys(responseAll).reduce((acc, key, index) => {
+                    return { ...acc, [key]: allResponses[index] };
+                }, {});
+
+                setDataResponseAll(updatedProductList);
+            } catch (error) {
+                console.log("Failed to fetch product list", error)
+            }
+        }
+
+        fetchProductList();
+    }, [dateSelect, router.query.slug])
+
+
 
     return (
         <section className="analysis w-screen overflow-auto section">
             <div className='content'>
-                {loading ? ( // Conditional rendering based on the loading state
+                {loading ? (
                     <p>Loading...</p>
                 ) : (
                     <>
@@ -159,74 +112,36 @@ export default function render() {
                                 </a>
                                 <p className="title whitespace-nowrap !text-xl sm:!text-3xl">Dự án:
                                     <span className='bg-white rounded-md text-black mx-3 px-3 text-ellipsis whitespace-nowrap'>
-                                        {post.title.length > 10 ? post.title.slice(0, 20) + '...' : post.title}
+                                        {dataRender.title.length > 10 ? dataRender.title.slice(0, 20) + '...' : dataRender.title}
                                     </span>
                                 </p>
                             </div>
-                            <div className="filterSort flex">
-                                <div className="filter">
-                                    <select value={filterValue} onChange={handleFilterChange}>
-                                        <option value="all">Tất cả</option>
-                                        <option value="product">Sản phẩm</option>
-                                    </select>
-                                </div>
-                                <div className="filter ml-5">
-                                    <select value={dateSelect} onChange={handleSortChange}>
-                                        <option value="24h">24 giờ trườc</option>
-                                        <option value="7d">7 ngày trước</option>
-                                        <option value="30d">30 ngày trước</option>
-                                    </select>
-                                </div>
+                            <div className='filterSort flex flex-col sm:flex-row'>
+                                <Select placeholder={filterValue} onValueChange={setFilterValue}>
+                                    <SelectItem value="all">
+                                        Tất cả
+                                    </SelectItem>
+                                </Select>
+                                <DateRangePickerComp placeholder={dateSelect} onValueChange={setDateSelect} />
                             </div>
                         </div>
                         <div className="dashboard max-sm:!p-0 max-sm:!pt-10 pt-10 gap-5">
-                            <div className="page_chart">
-                                <div className="tabs_wrapper">
-                                    <div className="tabs_scroll-container">
-                                        <div className='tabs_tabs'>
-                                            <button type="button" className='flex min-w-[220px] flex-shrink-0 cursor-pointer px-4 py-4 focus:outline-none bg-background-100 text-gray-1000 border-b-2 border-b-gray-1000 group-[.enable-vertical]:lg:border-b-0 group-[.enable-vertical]:lg:border-l-2 group-[.enable-vertical]:lg:border-l-gray-1000'>
-                                                <div className='flex flex-col items-stretch justify-start gap-2'>
-                                                    <div className='flex flex-col items-stretch justify-between'>
-                                                        <p className='text_wrapper text_nowrap text-sm text-left'>Visitors</p>
-                                                    </div>
-                                                    <div className='flex flex-row items-center justify-start gap-2'>
-                                                        <p className='text_wrapper tabs_title'>{overview ? overview["devices"] : 'Loading...'}</p>
-                                                        <span className='tooltip_container'>
-                                                            <div className='trend_trend trend_good'>
-                                                                <p className="text_wrapper text-xs">+200%</p>
-                                                            </div>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="tabs_tab-shadow-wrapper">
-                                        <div className="tabs_tabs-shadow tabs_tabs-shadow--hidden">
-
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Line Chart */}
-                                <div className="line_chart h-[450px] p-2 flex justify-evenly">
-                                    <LineChart data={timeseries} dateSelect={dateSelect} />
-                                </div>
-                            </div>
-
+                            <AreaChartVisul data={dataResponseAll.timeseries} type={selectValue} />
                             <div className='grid_stack'>
                                 <div className='grid_stack-2'>
-                                    <RenderTabelAnalytics data={path} panel_title={"Top Pages"} />
-                                    <RenderTabelAnalytics data={referrer} panel_title={"Top Referrers"} />
+                                    <ListBarVisul data={dataResponseAll.path} title={"Top Pages"} />
+                                    <ListBarVisul data={dataResponseAll.referrer} title={"Top Referrers"} />
                                 </div>
-                                <div className='grid_stack-3'>
-                                    <RenderTabelAnalytics data={country} panel_title={"Countries"} />
-                                    <RenderTabelAnalytics data={os_name} panel_title={"Operating Systems"} />
-                                    <RenderTabelAnalytics data={client_name} panel_title={"Browsers"} />
+                                <div className='grid_stack-2'>
+                                    <ListBarVisul data={dataResponseAll.country} title={"Countries"} />
+                                    <ListBarVisul data={dataResponseAll.os_name} title={"Operating Systems"} />
+                                    <ListBarVisul data={dataResponseAll.client_name} title={"Browsers"} />
                                 </div>
                             </div>
                         </div>
                     </>
                 )}
+
             </div>
         </section>
     )
