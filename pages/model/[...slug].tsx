@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { getDataDatabaseByKey, getSignedUrlFileStorageByKey } from '../../components/utils/supabase-storage';
 import InfoContainer from '../../components/model/info-container';
 import QRCode from 'react-qr-code';
+import ModelViewer from '../../components/model/model-viewer';
 
 export default function Render() {
     const router = useRouter()
@@ -55,7 +56,7 @@ export default function Render() {
                     <p>Loading...</p>
                 ) : (
                     <div className='render' style={{ backgroundColor: dataRender.color }}>
-                        <model-viewer
+                        {/* <model-viewer
                             src={dataRender.url["signedUrl"]}
                             alt={dataRender.description}
                             title={dataRender.title}
@@ -68,7 +69,12 @@ export default function Render() {
                             ar
                             autoplay
                         >
-                        </model-viewer>
+                        </model-viewer> */}
+                        <ModelViewer
+                            linkUrl={dataRender.url["signedUrl"]}
+                            title={dataRender.title}
+                            description={dataRender.description}
+                        />
                         <div className='sm:block hidden'>
                             <div className="bottom-left-menu">
                                 <p className="first">{dataRender.title}</p>

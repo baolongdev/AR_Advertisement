@@ -77,7 +77,7 @@ export default function create() {
             <div className="dashboard">
                 <div className={`view border`} style={{ backgroundColor: color || 'initial' }}>
                     <ModelViewer
-                        linkUrl = {"/model/bed.glb"}
+                        linkUrl = {fileBlobUrl}
                         title={title}
                         description={""}
                     />

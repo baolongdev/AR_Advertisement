@@ -11,5 +11,6 @@
 @import 'additional-styles/analysis.css';
 @import 'additional-styles/showcase.css';
 @import 'additional-styles/dashboard.css';
-@import 'additional-styles/modelcreate.css';
-@import 'additional-styles/modelviewer.css';
+@import 'additional-styles/model/modelcreate.css';
+@import 'additional-styles/model/modelviewer.css';
+@import 'additional-styles/model/dimensions.css';
