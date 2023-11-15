@@ -35,11 +35,11 @@ export default function ProductionModels() {
         <section id="production-models" className="section">
             <div className="content mx-auto max-w-7xl p-6 flex flex-col items-center justify-between md:p-12 lg:py-20 xl:items-start">
                 <div className="mx-auto max-w-lg text-center">
-                    <h2 className='text-5xl sm:text-6xl md:pt-12 xl:pt-0'>Các sản phẩm mẫu</h2>
-                    <p className="large mb-8 mt-3">
+                    <h2 className='text-5xl sm:text-6xl md:pt-12 xl:pt-0 mb-8'>Các sản phẩm mẫu</h2>
+                    {/* <p className="large mb-8 mt-3">
                         Kaedim is optimized for usable, production-ready 3D assets. We've worked
                         closely with 3D artists to ensure outputs are up to industry standards.
-                    </p>
+                    </p> */}
                 </div>
                 <div className='flex w-full flex-col justify-center gap-7'>
                     <div className="relative w-full">

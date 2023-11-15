@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Transition from '../utils/transitions';
 
+function isImage(url) {
+  return /\.(jpeg|jpg|gif|png)$/.test(url);
+}
+
 function Exposition() {
   const [activeTab, setActiveTab] = useState(0);
   const tabsContent = [
@@ -14,13 +18,13 @@ function Exposition() {
       title: "Trải nghiệm thực tế tăng cường ở mọi nơi",
       description: "Các doanh nghiệp và tổ chức có thể dễ dàng thêm trải nghiệm kỹ thuật số, tương tác vào các tài liệu này, khiến chúng trở nên hấp dẫn và mang tính thông tin hơn cho người dùng.",
       iconPath: "M11.854.146a.5.5 0 00-.525-.116l-11 4a.5.5 0 00-.015.934l4.8 1.921 1.921 4.8A.5.5 0 007.5 12h.008a.5.5 0 00.462-.329l4-11a.5.5 0 00-.116-.525z",
-      activeTabContentSource: "assets/multi-platform.png"
+      activeTabContentSource: "video/multi-platform.mp4"
     },
     // {
-    //   title: "Quản lý",
-    //   description: "Sử dụng Obsidian để đồng bộ hóa và xử lý bài đăng cho phép mỗi bảo tàng quản lý và tùy chỉnh nội dung, tài liệu, và trải nghiệm trang web của họ dành cho người tham quan",
+    //   title: "Quản lý và thống kê",
+    //   description: "Cung cấp tính năng quản lý chi tiết và đầy đủ",
     //   iconPath: "M11.334 8.06a.5.5 0 00-.421-.237 6.023 6.023 0 01-5.905-6c0-.41.042-.82.125-1.221a.5.5 0 00-.614-.586 6 6 0 106.832 8.529.5.5 0 00-.017-.485z",
-    //   activeTabContentSource: "assets/obs-sync.gif"
+    //   activeTabContentSource: "video/obs-sync.gif"
     // },
   ];
 
@@ -32,7 +36,7 @@ function Exposition() {
         <div className="visit__content max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6">
           <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
             <h2 className="text-5xl sm:text-6xl md:pt-12 xl:pt-0">Tính năng nổi bật</h2>
-            <p className="text-xl large mb-8 mt-3">Take your workflow to the next level and make quick capture actually quick</p>
+            {/* <p className="text-xl large mb-8 mt-3">Take your workflow to the next level and make quick capture actually quick</p> */}
             {/* Tabs buttons */}
             <div className="visit__datas mb-8 md:mb-0">
               {tabsContent.map((tab, index) => (
@@ -70,9 +74,14 @@ function Exposition() {
               leaveStart="opacity-100 translate-y-0"
               leaveEnd="opacity-0 -translate-y-16"
             >
-              <div className="relative inline-flex flex-col">
-                <img className="md:max-w-none mx-auto rounded w-full" src={tabsContent[activeTab].activeTabContentSource} />
-              </div>
+              {isImage(tabsContent[activeTab].activeTabContentSource) ? (
+                <img className="md:max-w-none mx-auto rounded w-full" src={tabsContent[activeTab].activeTabContentSource} alt="Image" />
+              ) : (
+                <video className="md:max-w-none mx-auto rounded w-full" controls>
+                  <source src={tabsContent[activeTab].activeTabContentSource} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
             </Transition>
           </div>
         </div>

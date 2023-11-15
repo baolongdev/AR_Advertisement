@@ -10,11 +10,11 @@ export default function Home() {
   return (
     <Layout>
       <HeroHome />
-      <Intro/>
+      {/* <Intro/> */}
       <Exposition />
-      <HowWord />
+      {/* <HowWord /> */}
       <ProductionModels/>
-      <Statistics/>
+      {/* <Statistics/> */}
     </Layout>
   )
 }

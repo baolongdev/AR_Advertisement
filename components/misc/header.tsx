@@ -29,8 +29,8 @@ const Header = () => {
   const navLinks = [
     { text: "Home", href: "/" },
     { text: "Showcase", href: "/showcase" },
-    { text: "Pricing", href: "/pricing" },
-    { text: "Docs", href: "/docs" },
+    // { text: "Pricing", href: "/pricing" },
+    // { text: "Docs", href: "/docs" },
     // { text: "Payments", href: "#audio-guide" },
   ];
 
