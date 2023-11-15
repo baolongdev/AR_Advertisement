@@ -2,12 +2,14 @@ import React, { HTMLAttributes, useEffect, useRef, useState } from 'react';
 import dimensions from './dimensions';
 import { Switch, Text } from '@tremor/react';
 import { motion } from 'framer-motion';
+import PluginControls from './plugin';
 
-export default function ModelViewer({ linkUrl, title = "", description = "", ...props }) {
+export default function ModelViewer({ linkUrl, title = "", description = "",...props }) {
   const [dimensionsOn, setDimensionsOn] = useState<boolean>(false);
   const [animationOn, setAnimationOn] = useState<boolean>(false);
+
   useEffect(() => {
-    dimensions(dimensionsOn)
+    dimensions(dimensionsOn)    
   }, [dimensionsOn])
 
   return (
@@ -18,7 +20,7 @@ export default function ModelViewer({ linkUrl, title = "", description = "", ...
       title={title}
       alt={description}
       {...(animationOn ? { autoplay: true } : {})}
-      
+
       ar-scale="auto"
       camera-controls
       touch-action="pan-y"
@@ -29,8 +31,8 @@ export default function ModelViewer({ linkUrl, title = "", description = "", ...
     >
       <motion.div
         drag
-        dragConstraints={{ left: 0, right: 400, top: 0, bottom: 400 }}
-        
+        dragConstraints={{ left: 0, right: 0, top: 0, bottom: 200 }}
+
       >
         <div className="flex flex-col gap-3 absolute top-3 right-3 w-52 p-2 rounded-md bg-white">
           <div className='w-full flex gap-2'>

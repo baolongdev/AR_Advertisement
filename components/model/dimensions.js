@@ -9,15 +9,16 @@ function createButtonDimensions(modelViewer, slot, className, dataPosition, data
 }
 
 function createSvgLines(modelViewer) {
-    const svgContainer = document.createElement('svg');
+    var xmlns = "http://www.w3.org/2000/svg";
+    const svgContainer = document.createElementNS(xmlns, "svg");
     svgContainer.id = 'dimLines';
     svgContainer.classList.add('dimensionLineContainer');
-    svgContainer.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-    svgContainer.className = 'dimensionLineContainer';
+    svgContainer.setAttribute('width', '100%');
+    svgContainer.setAttribute('height', '100%');
 
     for (let i = 0; i < 5; i++) {
-        const line = document.createElement('line');
-        line.className = 'dimensionLine';
+        const line = document.createElementNS(xmlns, 'line');
+        line.classList.add('dimensionLine');
         svgContainer.appendChild(line);
     }
 
@@ -25,37 +26,23 @@ function createSvgLines(modelViewer) {
 }
 
 // update svg
-// function drawLine(svgLine, dotHotspot1, dotHotspot2, dimensionHotspot) {
-//     const getCanvasPosition = (element) => {
-//         const rect = element.getBoundingClientRect();
-//         return {
-//             x: rect.left + rect.width / 2,
-//             y: rect.top + rect.height / 2,
-//         };
-//     };
+function drawLine(svgLine, dotHotspot1, dotHotspot2, dimensionHotspot) {
+    if (dotHotspot1 && dotHotspot2) {
+        svgLine.setAttribute('x1', dotHotspot1.canvasPosition.x);
+        svgLine.setAttribute('y1', dotHotspot1.canvasPosition.y);
+        svgLine.setAttribute('x2', dotHotspot2.canvasPosition.x);
+        svgLine.setAttribute('y2', dotHotspot2.canvasPosition.y);
 
-//     if (dotHotspot1 && dotHotspot2) {
-//         const pos1 = getCanvasPosition(dotHotspot1);
-//         const pos2 = getCanvasPosition(dotHotspot2);
-//         svgLine.setAttribute('x1', pos1.x);
-//         svgLine.setAttribute('y1', pos1.y);
-//         svgLine.setAttribute('x2', pos2.x);
-//         svgLine.setAttribute('y2', pos2.y);
+        // use provided optional hotspot to tie visibility of this svg line to
+        if (dimensionHotspot && !dimensionHotspot.facingCamera) {
+            svgLine.classList.add('hide');
+        }
+        else {
+            svgLine.classList.remove('hide');
+        }
+    }
+}
 
-//         // use provided optional hotspot to tie visibility of this svg line to
-//         if (dimensionHotspot && !dimensionHotspot.facingCamera) {
-//             svgLine.classList.add('hide');
-//         }
-//         else {
-//             svgLine.classList.remove('hide');
-//         }
-//     }
-// }
-
-// function queryHotspot(modelViewer, slotName) {
-//     const hotspots = modelViewer.querySelectorAll(`[slot="${slotName}"]`);
-//     return hotspots[0];
-// }
 function setVisibility(visible, dimElements) {
     dimElements.forEach((element) => {
         if (visible) {
@@ -71,7 +58,7 @@ export default function dimensions(dimensionsVisible = false) {
     if (modelViewer) {
         const hotspotsExist = modelViewer.querySelectorAll('[slot^="hotspot-"]').length > 0;
         const svgLinesExist = modelViewer.querySelector('#dimLines') !== null;
-    
+
         if (!hotspotsExist) {
             createButtonDimensions(modelViewer, 'hotspot-dot+X-Y+Z', 'dot', '1 -1 1', '1 0 0');
             createButtonDimensions(modelViewer, 'hotspot-dim+X-Y', 'dim', '1 -1 0', '1 0 0');
@@ -85,22 +72,26 @@ export default function dimensions(dimensionsVisible = false) {
             createButtonDimensions(modelViewer, 'hotspot-dim-X-Y', 'dim', '-1 -1 0', '-1 0 0');
             createButtonDimensions(modelViewer, 'hotspot-dot-X-Y+Z', 'dot', '-1 -1 1', '-1 0 0');
         }
-    
+
         if (!svgLinesExist) {
             createSvgLines(modelViewer);
         }
-    }    
+    }
     const dimElements = [...modelViewer.querySelectorAll('button'), modelViewer.querySelector('#dimLines')];
     setVisibility(dimensionsVisible, dimElements)
     const dimLines = modelViewer.querySelectorAll('line');
 
-    // const renderSVG = () => {
-    //     drawLine(dimLines[0], queryHotspot(modelViewer, 'hotspot-dot+X-Y+Z'), queryHotspot(modelViewer, 'hotspot-dot+X-Y-Z'), queryHotspot(modelViewer, 'hotspot-dim+X-Y'));
-    //     drawLine(dimLines[1], queryHotspot(modelViewer, 'hotspot-dot+X-Y-Z'), queryHotspot(modelViewer, 'hotspot-dot+X+Y-Z'), queryHotspot(modelViewer, 'hotspot-dim+X-Z'));
-    //     drawLine(dimLines[2], queryHotspot(modelViewer, 'hotspot-dot+X+Y-Z'), queryHotspot(modelViewer, 'hotspot-dot-X+Y-Z')); // always visible
-    //     drawLine(dimLines[3], queryHotspot(modelViewer, 'hotspot-dot-X+Y-Z'), queryHotspot(modelViewer, 'hotspot-dot-X-Y-Z'), queryHotspot(modelViewer, 'hotspot-dim-X-Z'));
-    //     drawLine(dimLines[4], queryHotspot(modelViewer, 'hotspot-dot-X-Y-Z'), queryHotspot(modelViewer, 'hotspot-dot-X-Y+Z'), queryHotspot(modelViewer, 'hotspot-dim-X-Y'));
-    // };
+    modelViewer.addEventListener('ar-status', (event) => {
+        setVisibility(event.detail.status !== 'session-started');
+    });
+
+    const renderSVG = () => {
+        drawLine(dimLines[0], modelViewer.queryHotspot('hotspot-dot+X-Y+Z'), modelViewer.queryHotspot('hotspot-dot+X-Y-Z'), modelViewer.queryHotspot('hotspot-dim+X-Y'));
+        drawLine(dimLines[1], modelViewer.queryHotspot('hotspot-dot+X-Y-Z'), modelViewer.queryHotspot('hotspot-dot+X+Y-Z'), modelViewer.queryHotspot('hotspot-dim+X-Z'));
+        drawLine(dimLines[2], modelViewer.queryHotspot('hotspot-dot+X+Y-Z'), modelViewer.queryHotspot('hotspot-dot-X+Y-Z')); // always visible
+        drawLine(dimLines[3], modelViewer.queryHotspot('hotspot-dot-X+Y-Z'), modelViewer.queryHotspot('hotspot-dot-X-Y-Z'), modelViewer.queryHotspot('hotspot-dim-X-Z'));
+        drawLine(dimLines[4], modelViewer.queryHotspot('hotspot-dot-X-Y-Z'), modelViewer.queryHotspot('hotspot-dot-X-Y+Z'), modelViewer.queryHotspot('hotspot-dim-X-Y'));
+    };
 
     modelViewer.addEventListener('load', () => {
         const center = modelViewer.getBoundingBoxCenter();
@@ -174,8 +165,9 @@ export default function dimensions(dimensionsVisible = false) {
             position: `${center.x - x2} ${center.y - y2} ${center.z + z2}`
         });
 
-        // renderSVG();
-        // modelViewer.addEventListener('camera-change', renderSVG);
+        renderSVG();
+        modelViewer.addEventListener('camera-change', renderSVG);
+        modelViewer.addEventListener('autoplay', renderSVG);
     })
 }
 

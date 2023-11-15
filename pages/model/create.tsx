@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TwitterPicker } from 'react-color';
 import { useSession } from '../../hooks/useSession';
 import { useRouter } from 'next/router';
-import { Switch } from "@tremor/react";
+import { Accordion, AccordionBody, AccordionHeader, AccordionList, Divider, Switch } from "@tremor/react";
 import TextInput from './text-input';
 import { toast } from 'react-toastify';
 import { generateRandomFileName } from '../../components/utils/random';
@@ -10,6 +10,7 @@ import { uploadFileStorage, uploadFileDatabase } from '../../components/utils/su
 import { handleFileUpload, readFileContent } from '../../components/utils/editor/fileUtils';
 import InfoContainer from '../../components/model/info-container';
 import ModelViewer from '../../components/model/model-viewer';
+import ListHospots from '../../components/model/list-hospots';
 
 
 export default function create() {
@@ -77,7 +78,8 @@ export default function create() {
             <div className="dashboard">
                 <div className={`view border`} style={{ backgroundColor: color || 'initial' }}>
                     <ModelViewer
-                        linkUrl = {fileBlobUrl}
+                        // linkUrl = {fileBlobUrl}
+                        linkUrl={"/model/bed.glb"}
                         title={title}
                         description={""}
                     />
@@ -86,7 +88,7 @@ export default function create() {
 
 
                 <div className="table">
-                    <div className="group1 w-full">
+                    <div className="group1 w-full sm:overflow-y-auto sm:h-[450px] pb-5">
                         <TextInput title={"Tên sản phẩm"} value={title} onValueChange={setTitle} />
                         <TextInput title={"Thông tin mô tả sản phẩm"} value={description} onValueChange={setDescription} />
                         <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setPlacement(!placement)}>
@@ -102,6 +104,10 @@ export default function create() {
                             </h4>
                             <TwitterPicker color={color} onChange={(c) => setColor(c.hex)} />
                         </div>
+                        <Divider />
+                        <AccordionList>
+                            <ListHospots />
+                        </AccordionList>
                     </div>
 
                     <div className="group1 flex flex-col gap-3">

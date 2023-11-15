@@ -16,5 +16,5 @@
     "incremental": true
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/simple/utils/transitions.jsx", "src/types/model-viewer.d.ts", "components/model/dimensions.js"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/simple/utils/transitions.jsx", "src/types/model-viewer.d.ts", "components/model/dimensions.js", "components/model/plugin.js"]
 }
