@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import Transition from '../utils/transitions';
 
-function isImage(url) {
-  return /\.(jpeg|jpg|gif|png)$/.test(url);
-}
-
 function Exposition() {
   const [activeTab, setActiveTab] = useState(0);
   const tabsContent = [
@@ -21,8 +17,8 @@ function Exposition() {
       activeTabContentSource: "video/multi-platform.mp4"
     },
     // {
-    //   title: "Quản lý và thống kê",
-    //   description: "Cung cấp tính năng quản lý chi tiết và đầy đủ",
+    //   title: "Quản lý",
+    //   description: "Sử dụng Obsidian để đồng bộ hóa và xử lý bài đăng cho phép mỗi bảo tàng quản lý và tùy chỉnh nội dung, tài liệu, và trải nghiệm trang web của họ dành cho người tham quan",
     //   iconPath: "M11.334 8.06a.5.5 0 00-.421-.237 6.023 6.023 0 01-5.905-6c0-.41.042-.82.125-1.221a.5.5 0 00-.614-.586 6 6 0 106.832 8.529.5.5 0 00-.017-.485z",
     //   activeTabContentSource: "video/obs-sync.gif"
     // },
@@ -74,14 +70,9 @@ function Exposition() {
               leaveStart="opacity-100 translate-y-0"
               leaveEnd="opacity-0 -translate-y-16"
             >
-              {isImage(tabsContent[activeTab].activeTabContentSource) ? (
-                <img className="md:max-w-none mx-auto rounded w-full" src={tabsContent[activeTab].activeTabContentSource} alt="Image" />
-              ) : (
-                <video className="md:max-w-none mx-auto rounded w-full" controls>
-                  <source src={tabsContent[activeTab].activeTabContentSource} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              )}
+              <div className="relative inline-flex flex-col">
+                <img className="md:max-w-none mx-auto rounded w-full" src={tabsContent[activeTab].activeTabContentSource} />
+              </div>
             </Transition>
           </div>
         </div>

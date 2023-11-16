@@ -7,29 +7,19 @@ import PluginControls from './plugin';
 export default function ListHospots() {
     const [values, setValues] = useState({});
     const [hotspots, setHotspots] = useState<any>([]);
-    const [toggleClick, setToggleClick] = useState<boolean>(false)
+    const [toggleClick, setToggleClick] = useState<boolean>(null)
+
     useEffect(() => {
-        const clickHandler = (modelViewer, cameraTarget, checkPosition) => {
+        const cleanup = PluginControls().getPositionClick((modelViewer, cameraTarget, checkPosition) => {
             const count = PluginControls().getCountHotspot().length;
-            console.log(count);
-
-            if (!checkPosition) {
-                if (toggleClick === true) {
-                    console.log("ádfasdf");
-                    
-                    PluginControls().addHotspot(cameraTarget, count, (modelViewer) => {
-                        modelViewer.removeEventListener('click', clickHandler);
-                        setToggleClick(false)
-                    });
-                }
-            }
-        };
-        if (toggleClick) {
-            PluginControls().getPositionClick(clickHandler);
-        }
-        setHotspots(PluginControls().getCountHotspot());
-        console.log(toggleClick);
-
+            if (toggleClick) {
+                PluginControls().addHotspot(cameraTarget, count, () => {
+                    setToggleClick(false);
+                });
+                setHotspots(PluginControls().getCountHotspot());
+            } 
+        });
+        return cleanup;
     }, [toggleClick])
 
 
@@ -48,7 +38,7 @@ export default function ListHospots() {
                                         e.preventDefault();
                                         const idSlot = slot
                                         PluginControls().deleteHotspot(idSlot)
-                                        console.log(hotspots);
+                                        setHotspots(PluginControls().getCountHotspot());
                                     }}
                                 >
                                     <div className="flex flex-col gap-7">
@@ -81,7 +71,7 @@ export default function ListHospots() {
                     <Button className="" variant="primary" icon={PlusCircleIcon}
                         onClick={(e) => {
                             e.preventDefault();
-                            setToggleClick(!toggleClick)
+                            setToggleClick(!toggleClick);
                         }}
                     >
                         Thêm chú thích

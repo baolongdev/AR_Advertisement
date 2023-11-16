@@ -3,7 +3,7 @@ import { TwitterPicker } from 'react-color';
 import { useSession } from '../../hooks/useSession';
 import { useRouter } from 'next/router';
 import { Accordion, AccordionBody, AccordionHeader, AccordionList, Divider, Switch } from "@tremor/react";
-import TextInput from './text-input';
+import TextInput from '../../components/model/text-input';
 import { toast } from 'react-toastify';
 import { generateRandomFileName } from '../../components/utils/random';
 import { uploadFileStorage, uploadFileDatabase } from '../../components/utils/supabase-storage';
@@ -11,6 +11,7 @@ import { handleFileUpload, readFileContent } from '../../components/utils/editor
 import InfoContainer from '../../components/model/info-container';
 import ModelViewer from '../../components/model/model-viewer';
 import ListHospots from '../../components/model/list-hospots';
+import PluginControls from '../../components/model/plugin';
 
 
 export default function create() {
@@ -55,6 +56,7 @@ export default function create() {
                     placement: placement,
                     color: color,
                     email: email,
+                    hospots: PluginControls().convertHotspotsToJSON(),
                 };
                 await uploadFileDatabase(key, userId, dataForDatabase);
                 router.push(`/model/${key}`);
@@ -78,8 +80,8 @@ export default function create() {
             <div className="dashboard">
                 <div className={`view border`} style={{ backgroundColor: color || 'initial' }}>
                     <ModelViewer
-                        // linkUrl = {fileBlobUrl}
-                        linkUrl={"/model/bed.glb"}
+                        linkUrl = {fileBlobUrl}
+                        // linkUrl={"/model/bed.glb"}
                         title={title}
                         description={""}
                     />

@@ -40,6 +40,9 @@ export default function PluginControls() {
             callback(modelViewer, cameraTarget, checkPosition(cameraTarget));
         };
         modelViewer.addEventListener('click', clickHandler);
+        return () => {
+            modelViewer.removeEventListener('click', clickHandler);
+        };
     };
 
     const addHotspot = (CameraTarget, count, callback) => {
@@ -49,7 +52,7 @@ export default function PluginControls() {
     }
     const deleteHotspot = (idSlot) => {
         const hotspot = querySelectorHotspot(idSlot);
-    
+
         if (hotspot) {
             hotspot.remove();
         }
@@ -78,7 +81,7 @@ export default function PluginControls() {
         });
         return { length: hotspotButtons.length, slotsArray: slotsArray };
     };
-    
+
     const querySelectorAllHotspot = () => {
         return modelViewer.querySelectorAll('.buttonHotspot');
     };
@@ -86,6 +89,43 @@ export default function PluginControls() {
     const querySelectorHotspot = (index) => {
         return modelViewer.querySelector(`button[slot="${index}"]`);
     };
+
+    const convertHotspotsToJSON = () => {
+        const hotspotNodes = querySelectorAllHotspot();
+        const hotspotArray = [];
+
+        hotspotNodes.forEach(button => {
+            const position = button.dataset.position;
+            const content = button.querySelector('.HotspotAnnotation')?.textContent || '';
+
+            // Tạo đối tượng JSON cho mỗi hotspot
+            const hotspotObject = {
+                slot: button.slot,
+                position: position,
+                content: content
+            };
+
+            hotspotArray.push(hotspotObject);
+        });
+
+        return hotspotArray;
+    };
+
+    const renderHotspotsFromJSON = (hotspotsJSON) => {
+        hotspotsJSON.forEach((hotspotData) => {
+            const { slot, position, content } = hotspotData;
+            const count = PluginControls().getCountHotspot().length;
+            // Kiểm tra xem hotspot có sẵn không trước khi thêm mới
+            if (!checkPosition(position)) {
+                addHotspot({ x: parseFloat(position.split(' ')[0]), y: parseFloat(position.split(' ')[1]), z: parseFloat(position.split(' ')[2]) }, count, 
+                () => {
+                    console.log("");
+                    updateContentHotspot(`hotspot-${count}`, content);
+                })
+            }
+        });
+    };
+
     return {
         getAnimationNames,
         getPositionClick,
@@ -95,5 +135,7 @@ export default function PluginControls() {
         getCountHotspot,
         querySelectorAllHotspot,
         querySelectorHotspot,
+        convertHotspotsToJSON,
+        renderHotspotsFromJSON,
     };
 }

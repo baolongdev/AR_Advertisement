@@ -4,6 +4,7 @@ import { getDataDatabaseByKey, getSignedUrlFileStorageByKey } from '../../compon
 import InfoContainer from '../../components/model/info-container';
 import QRCode from 'react-qr-code';
 import ModelViewer from '../../components/model/model-viewer';
+import PluginControls from '../../components/model/plugin';
 
 export default function Render() {
     const router = useRouter()
@@ -17,6 +18,7 @@ export default function Render() {
         description: "",
         color: "",
         email: "",
+        hospots: [],
         placement: false,
         fileContent: false,
     });
@@ -45,9 +47,11 @@ export default function Render() {
         };
 
         fetchData();
-
     }, [router.query.slug]);
 
+    useEffect(()=>{
+        PluginControls().renderHotspotsFromJSON(dataRender.hospots)
+    }, [dataRender.hospots])
 
     return (
         <section id="modelview" className="section">
@@ -56,20 +60,6 @@ export default function Render() {
                     <p>Loading...</p>
                 ) : (
                     <div className='render' style={{ backgroundColor: dataRender.color }}>
-                        {/* <model-viewer
-                            src={dataRender.url["signedUrl"]}
-                            alt={dataRender.description}
-                            title={dataRender.title}
-                            ar-scale="auto"
-                            camera-controls
-                            touch-action="pan-y"
-                            auto-rotate
-                            shadow-intensity="1"
-                            ar-modes="webxr scene-viewer quick-look"
-                            ar
-                            autoplay
-                        >
-                        </model-viewer> */}
                         <ModelViewer
                             linkUrl={dataRender.url["signedUrl"]}
                             title={dataRender.title}
