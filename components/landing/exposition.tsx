@@ -5,20 +5,20 @@ function Exposition() {
   const [activeTab, setActiveTab] = useState(0);
   const tabsContent = [
     {
-      title: "Không cần tải ứng dụng",
+      title: "Tương thích với nhiều thiết bị như Android, iOS, iPadOS & VisionOS.",
       description: "Mã QR hoạt động mà không cần ứng dụng chuyên dụng trên điện thoại thông minh và mắc kính AR/VR như Apple Vision Pro",
       iconPath: "M11.953 4.29a.5.5 0 00-.454-.292H6.14L6.984.62A.5.5 0 006.12.173l-6 7a.5.5 0 00.379.825h5.359l-.844 3.38a.5.5 0 00.864.445l6-7a.5.5 0 00.075-.534z",
       activeTabContentSource: "/video/ar_demo.gif"
     },
     {
-      title: "Trải nghiệm thực tế tăng cường ở mọi nơi",
-      description: "Các doanh nghiệp và tổ chức có thể dễ dàng thêm trải nghiệm kỹ thuật số, tương tác vào các tài liệu này, khiến chúng trở nên hấp dẫn và mang tính thông tin hơn cho người dùng.",
+      title: "Trải nghiệm thực tế tăng cường ở mọi nơi.",
+      description: "Công nghệ AR Code có tiềm năng nâng cao trải nghiệm cho nhiều loại sản phẩm và vật liệu. Bằng cách sử dụng mã AR QR, các doanh nghiệp và tổ chức có thể dễ dàng thêm trải nghiệm kỹ thuật số, tương tác. Khiến chúng trở nên hấp dẫn và mang tính thông tin hơn cho người dùng.",
       iconPath: "M11.854.146a.5.5 0 00-.525-.116l-11 4a.5.5 0 00-.015.934l4.8 1.921 1.921 4.8A.5.5 0 007.5 12h.008a.5.5 0 00.462-.329l4-11a.5.5 0 00-.116-.525z",
       activeTabContentSource: "video/multi-platform.mp4"
     },
     // {
-    //   title: "Quản lý",
-    //   description: "Sử dụng Obsidian để đồng bộ hóa và xử lý bài đăng cho phép mỗi bảo tàng quản lý và tùy chỉnh nội dung, tài liệu, và trải nghiệm trang web của họ dành cho người tham quan",
+    //   title: "Tạo, quản lý, chỉnh sửa và theo dõi mã QR AR của bạn.",
+    //   description: <ul></ul>,
     //   iconPath: "M11.334 8.06a.5.5 0 00-.421-.237 6.023 6.023 0 01-5.905-6c0-.41.042-.82.125-1.221a.5.5 0 00-.614-.586 6 6 0 106.832 8.529.5.5 0 00-.017-.485z",
     //   activeTabContentSource: "video/obs-sync.gif"
     // },
@@ -31,7 +31,7 @@ function Exposition() {
         {/* Content */}
         <div className="visit__content max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6">
           <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
-            <h2 className="text-5xl sm:text-6xl md:pt-12 xl:pt-0">Tính năng nổi bật</h2>
+            <h2 className="text-5xl sm:text-6xl md:pt-12 xl:pt-0 mb-8">Tính năng nổi bật</h2>
             {/* <p className="text-xl large mb-8 mt-3">Take your workflow to the next level and make quick capture actually quick</p> */}
             {/* Tabs buttons */}
             <div className="visit__datas mb-8 md:mb-0">
@@ -71,7 +71,7 @@ function Exposition() {
               leaveEnd="opacity-0 -translate-y-16"
             >
               <div className="relative inline-flex flex-col">
-                <img className="md:max-w-none mx-auto rounded w-full" src={tabsContent[activeTab].activeTabContentSource} />
+                <img style={{height:'calc(100vh - 5rem)'}} className="md:max-w-none mx-auto rounded w-full" src={tabsContent[activeTab].activeTabContentSource} />
               </div>
             </Transition>
           </div>

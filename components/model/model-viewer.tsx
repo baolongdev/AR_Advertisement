@@ -31,7 +31,8 @@ export default function ModelViewer({ linkUrl, title = "", description = "",...p
     >
       <motion.div
         drag
-        dragConstraints={{ left: 0, right: 0, top: 0, bottom: 200 }}
+        dragConstraints={{ left: 0, right: 170, top: 150, bottom: 300 }}
+        // className='hidden sm:block'
 
       >
         <div className="flex flex-col gap-3 absolute top-3 right-3 w-52 p-2 rounded-md bg-white">

@@ -112,7 +112,7 @@ export default function PluginControls() {
     };
 
     const renderHotspotsFromJSON = (hotspotsJSON) => {
-        hotspotsJSON.forEach((hotspotData) => {
+        hotspotsJSON?.forEach((hotspotData) => {
             const { slot, position, content } = hotspotData;
             const count = PluginControls().getCountHotspot().length;
             // Kiểm tra xem hotspot có sẵn không trước khi thêm mới

@@ -1,0 +1,14 @@
+.popupQr {
+  right: 50% !important;
+  top: 50% !important;
+  transform: translate(50%, -50%) !important;
+  padding: 2rem !important;
+  /* height: 75% !important;
+  width: 80% !important; */
+  /* transition: all 0.4; */
+}
+.popupQr svg {
+  width: 70vw !important;
+  min-width: 150px !important;
+  max-width: 90% !important;
+}
