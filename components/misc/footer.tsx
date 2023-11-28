@@ -77,7 +77,7 @@ function Footer() {
             <div className="footer__form-title">
               HÃY LÀ NGƯỜI ĐẦU TIÊN NHẬN
               <br />
-              TIN TỨC BẢO TÀNG SỐ E-MUSEUM
+              TIN TỨC TỪ ARAD - AR ADVERTISING
             </div>
             <div className="form-block mod--footer w-form">
               <form
