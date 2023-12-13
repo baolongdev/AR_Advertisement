@@ -21,7 +21,8 @@ function Footer() {
   const menuItems = [
     { label: "Home", href: "/" },
     { label: "Showcase", href: "/showcase" },
-    // { label: "Pricing", href: "/pricing" },
+    { text: "Pricing", href: "/pricing" },
+    { text: "Roadmap", href: "/roadmap" },
     // { label: "Docs", href: "/docs" },
   ];
 
