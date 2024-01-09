@@ -9,6 +9,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@geist-ui/core": "^2.3.8",
     "@google/model-viewer": "^3.3.0",
     "@heroicons/react": "^2.0.18",
     "@supabase/auth-ui-react": "^0.4.6",
@@ -16,10 +17,12 @@
     "@tiptap/react": "^2.1.12",
     "@tremor/react": "^3.11.0",
     "@vercel/analytics": "^1.1.1",
+    "@vercel/speed-insights": "^1.0.2",
     "axios": "^1.6.1",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "framer-motion": "^10.16.4",
+    "geist": "^1.2.0",
     "heroicons": "^2.0.18",
     "next": "latest",
     "next-seo": "^6.1.0",
