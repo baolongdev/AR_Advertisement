@@ -36,6 +36,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <AdvancedScripts />
       <DefaultSeo {...SEO} />
       <Component {...pageProps} />
+      <SpeedInsights />
       <Analytics />
       <ToastContainer
         position="bottom-right"
