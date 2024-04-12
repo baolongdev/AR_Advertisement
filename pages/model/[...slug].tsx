@@ -87,25 +87,23 @@ export default function Render() {
                   className="logo-img"
                 />
               </a>
-              
+
               <div
-                className={`flex flex-col items-center gap-2 qrcode bg-white p-2 rounded ${
-                  isOpen ? "popupQr" : ""
-                }`}
+                className={`sm:block hidden flex flex-col items-center gap-2 qrcode bg-white p-2 rounded ${isOpen ? "popupQr" : ""
+                  }`}
                 onClick={() => setIsOpen((isOpen) => !isOpen)}
               >
                 <QRCode
-                //   onClick={() => setIsOpen((isOpen) => !isOpen)}
-                  className={` cursor-pointer relative`}
+                  //   onClick={() => setIsOpen((isOpen) => !isOpen)}
+                  className={`cursor-pointer relative`}
                   size={100}
                   style={{ height: "auto", maxWidth: "86px", width: "86px" }}
                   value={url || ""}
                   viewBox={`0 0 86 86`}
                 />
-                <p className={`relative text-black text-center select-none ${
-                  isOpen ? "h3" : ""
-                }`}>Quét Mã</p>
-                <div className="animate-ping w-5 h-5 rounded-full absolute bottom-0 right-0 bg-red-900"/>
+                <p className={`relative text-black text-center select-none ${isOpen ? "h3" : ""
+                  }`}>Quét Mã</p>
+                <div className="animate-ping w-5 h-5 rounded-full absolute bottom-0 right-0 bg-red-900" />
               </div>
             </div>
           </div>
