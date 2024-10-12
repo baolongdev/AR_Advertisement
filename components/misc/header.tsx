@@ -27,10 +27,10 @@ const Header = () => {
   };
 
   const navLinks = [
-    { text: "Home", href: "/" },
-    { text: "Showcase", href: "/showcase" },
-    { text: "Pricing", href: "/pricing" },
-    { text: "Roadmap", href: "/roadmap" },
+    { text: "Trang chủ", href: "/" },
+    { text: "Sản phẩm", href: "/showcase" },
+    // { text: "Pricing", href: "/pricing" },
+    // { text: "Roadmap", href: "/roadmap" },
     // { text: "Docs", href: "/docs" },
     // { text: "Payments", href: "#audio-guide" },
   ];
@@ -69,8 +69,8 @@ const Header = () => {
               </div>
               <div className="header__col col--3">
                 {/* Desktop sign in links */}
-                <a data-remodal-target="form" data-anim="link" href="/account" className="header__login">login</a>
-                <a data-remodal-target="form" href="/account" className="btn btn--slim w-button">sign up</a>
+                <a data-remodal-target="form" data-anim="link" href="/account" className="header__login">Đăng nhập</a>
+                <a data-remodal-target="form" href="/account" className="btn btn--slim w-button">Đăng ký</a>
               </div>
               <div className="header__humburger-wrap" onClick={toggleHumburger}>
                 <div className="header__humburger">
