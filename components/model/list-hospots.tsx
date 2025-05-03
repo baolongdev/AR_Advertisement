@@ -17,7 +17,7 @@ export default function ListHospots() {
                     setToggleClick(false);
                 });
                 setHotspots(PluginControls().getCountHotspot());
-            } 
+            }
         });
         return cleanup;
     }, [toggleClick])
@@ -62,6 +62,8 @@ export default function ListHospots() {
                                             placeholder="Nội dung..."
                                             value={values[slot]}
                                         />
+                                    
+                                        <div className="bg-slate-100 p-2 rounded-md border text-sm" dangerouslySetInnerHTML={{ __html: values[slot] || '' }} />
                                     </div>
                                 </form>
                             </Card>

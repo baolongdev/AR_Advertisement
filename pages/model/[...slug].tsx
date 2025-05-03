@@ -55,6 +55,7 @@ export default function Render() {
   useEffect(() => {
     PluginControls().renderHotspotsFromJSON(dataRender.hospots);
   }, [dataRender.hospots]);
+  console.log(dataRender);
 
   return (
     <section id="modelview" className="section">
@@ -71,7 +72,11 @@ export default function Render() {
             <div className="sm:block hidden">
               <div className="bottom-left-menu">
                 <p className="first">{dataRender.title}</p>
-                <p className="second">{dataRender.description}</p>
+                {/* <p className="second">{dataRender.description}</p> */}
+                <div
+                  className="second"
+                  dangerouslySetInnerHTML={{ __html: dataRender.description }}
+                />
               </div>
             </div>
             <div>

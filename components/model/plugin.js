@@ -59,16 +59,16 @@ export default function PluginControls() {
     };
 
     const updateContentHotspot = (idSlot, content) => {
-        const hotspot = querySelectorHotspot(idSlot);
-        const annotationDiv = hotspot?.querySelector(".HotspotAnnotation");
-
-        if (hotspot && annotationDiv) {
-            annotationDiv.textContent = content;
-        } else if (hotspot) {
-            const newAnnotationDiv = document.createElement('div');
-            newAnnotationDiv.className = 'HotspotAnnotation';
-            newAnnotationDiv.textContent = content;
-            hotspot.appendChild(newAnnotationDiv);
+        const hotspot = querySelectorHotspot(idSlot); // Ensure this function returns the correct hotspot element
+        if (hotspot) {
+            let annotationDiv = hotspot.querySelector(".HotspotAnnotation");
+            if (!annotationDiv) {
+                // If no annotation exists, create a new one
+                annotationDiv = document.createElement('div');
+                annotationDiv.className = 'HotspotAnnotation';
+                hotspot.appendChild(annotationDiv);
+            }
+            annotationDiv.innerHTML = content; // Update content of the annotation
         }
     };
 
@@ -95,12 +95,12 @@ export default function PluginControls() {
         const hotspotArray = [];
 
         hotspotNodes.forEach(button => {
-            const position = button.dataset.position;
-            const content = button.querySelector('.HotspotAnnotation')?.textContent || '';
+            const position = button.dataset.position || '';
+            const content = button.querySelector('.HotspotAnnotation').innerHTML || '';
 
             // Tạo đối tượng JSON cho mỗi hotspot
             const hotspotObject = {
-                slot: button.slot,
+                slot: button.slot || '',
                 position: position,
                 content: content
             };
@@ -117,11 +117,11 @@ export default function PluginControls() {
             const count = PluginControls().getCountHotspot().length;
             // Kiểm tra xem hotspot có sẵn không trước khi thêm mới
             if (!checkPosition(position)) {
-                addHotspot({ x: parseFloat(position.split(' ')[0]), y: parseFloat(position.split(' ')[1]), z: parseFloat(position.split(' ')[2]) }, count, 
-                () => {
-                    console.log("");
-                    updateContentHotspot(`hotspot-${count}`, content);
-                })
+                addHotspot({ x: parseFloat(position.split(' ')[0]), y: parseFloat(position.split(' ')[1]), z: parseFloat(position.split(' ')[2]) }, count,
+                    () => {
+                        console.log("");
+                        updateContentHotspot(`hotspot-${count}`, content);
+                    })
             }
         });
     };

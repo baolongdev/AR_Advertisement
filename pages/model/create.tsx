@@ -58,6 +58,8 @@ export default function create() {
                     email: email,
                     hospots: PluginControls().convertHotspotsToJSON(),
                 };
+                console.log(dataForDatabase);
+
                 await uploadFileDatabase(key, userId, dataForDatabase);
                 router.push(`/model/${key}`);
             } catch (error) {
@@ -80,7 +82,7 @@ export default function create() {
             <div className="dashboard">
                 <div className={`view border`} style={{ backgroundColor: color || 'initial' }}>
                     <ModelViewer
-                        linkUrl = {fileBlobUrl}
+                        linkUrl={fileBlobUrl}
                         // linkUrl={"/model/bed.glb"}
                         title={title}
                         description={""}
