@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
-    "https://czicgxdmyyjpfkmjpfon.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6aWNneGRteXlqcGZrbWpwZm9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc4MTI4ODQsImV4cCI6MjAxMzM4ODg4NH0.OMLwrt4app9rG8FegOrn6wLqpbS-j76ZInLjSeU-7Fw"
+    "https://lklkryecbqvxxheajwly.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxrbGtyeWVjYnF2eHhoZWFqd2x5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyODUzNTQsImV4cCI6MjA2MTg2MTM1NH0.pqMI33Z3ZDGJBDywMKs4mKEDK7g0ysa9AM2RrMkOVYc"
 );
 
 function getSession() {

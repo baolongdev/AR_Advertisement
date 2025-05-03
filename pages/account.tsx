@@ -7,12 +7,12 @@ export default function LoginPage() {
 
     if (!session) {
         return (
-            <Account/>
+            <Account />
         )
     }
     else {
         return (
-            <Dashboard/>
+            <Dashboard />
         );
     }
 }
