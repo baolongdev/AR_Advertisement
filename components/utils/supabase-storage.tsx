@@ -3,8 +3,8 @@ import crypto from 'crypto';
 
 // Initialize the Supabase client with your configuration
 export const supabase = createClient(
-    "https://czicgxdmyyjpfkmjpfon.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6aWNneGRteXlqcGZrbWpwZm9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTc4MTI4ODQsImV4cCI6MjAxMzM4ODg4NH0.OMLwrt4app9rG8FegOrn6wLqpbS-j76ZInLjSeU-7Fw");
+    "https://lklkryecbqvxxheajwly.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxrbGtyeWVjYnF2eHhoZWFqd2x5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyODUzNTQsImV4cCI6MjA2MTg2MTM1NH0.pqMI33Z3ZDGJBDywMKs4mKEDK7g0ysa9AM2RrMkOVYc");
 
 export async function uploadFileStorage(userId, key, filename, filedata) {
     const { data, error } = await supabase.storage
@@ -23,7 +23,7 @@ export async function uploadFileStorage(userId, key, filename, filedata) {
 export async function getSignedUrlFileStorageByKey(key) {
     const allowedExtensions = ['glb', 'gltf'];
     const userId = await getUserIdByKey(key);
-    
+
     const listFile = await getFileListInFolder(userId, key, allowedExtensions);
     console.log(listFile);
     if (listFile.length <= 0) {
@@ -32,7 +32,7 @@ export async function getSignedUrlFileStorageByKey(key) {
 
     const fileName = listFile[0].fileName;
     const extension = listFile[0].extension;
-    
+
     // Set the expiration time for the signed URL (e.g., 1 hour from now)
     const expirationTimestamp = new Date();
     expirationTimestamp.setHours(expirationTimestamp.getHours() + 1);
@@ -48,14 +48,14 @@ export async function getSignedUrlFileStorageByKey(key) {
 
 export async function getFileListInFolder(userId, key, allowedExtensions) {
     const { data, error } = await supabase.storage
-    .from('modelcreate')
-    .list(`${userId}/${key}`); // Specify the folder path you want to list
-    
+        .from('modelcreate')
+        .list(`${userId}/${key}`); // Specify the folder path you want to list
+
     if (error) {
         console.error('Error listing files:', error);
         return null;
     }
-    
+
     const fileData = data.map((file) => {
         const parts = file.name.split('.'); // Split the file name by periods
         const extension = parts.pop(); // Get the last part as the extension
@@ -171,27 +171,26 @@ export async function getAllData() {
 export async function deleteModelFromDatabase(key) {
     // Delete from Supabase database
     const { error } = await supabase
-      .from('modelcreate')
-      .delete()
-      .eq('key', key);
-  
+        .from('modelcreate')
+        .delete()
+        .eq('key', key);
+
     if (error) {
-      console.error('Error deleting model from the database:', error);
+        console.error('Error deleting model from the database:', error);
     }
-  
+
     return error;
-  }
-  
-  export async function deleteModelFromStorage(userId, key) {
+}
+
+export async function deleteModelFromStorage(userId, key) {
     // Delete from Supabase storage
     const { error } = await supabase.storage
-      .from('modelcreate')
-      .remove([`${userId}/${key}/*`]); // Use wildcard to delete all files in the folder
-  
+        .from('modelcreate')
+        .remove([`${userId}/${key}/*`]); // Use wildcard to delete all files in the folder
+
     if (error) {
-      console.error('Error deleting model from storage:', error);
+        console.error('Error deleting model from storage:', error);
     }
-  
+
     return error;
-  }
-  
+}
