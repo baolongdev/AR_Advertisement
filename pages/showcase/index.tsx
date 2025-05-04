@@ -7,11 +7,13 @@ import LoginPage from '../account';
 
 export default function Index() {
     const [cardData, setCardData] = useState([]);
-    
+
     useEffect(() => {
         getAllData().then((data) => {
             if (data) {
                 setCardData(data);
+                console.log(data);
+
             }
         });
     }, []);

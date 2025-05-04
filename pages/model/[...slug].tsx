@@ -82,7 +82,7 @@ export default function Render() {
             <div>
               <InfoContainer email={dataRender.email} />
               {/* Logo */}
-              <a href="/" className="header__logo w-inline-block">
+              {/* <a href="/" className="header__logo w-inline-block">
                 <img
                   height={67}
                   width={67}
@@ -91,11 +91,11 @@ export default function Render() {
                   alt=""
                   className="logo-img"
                 />
-              </a>
+              </a> */}
 
               <div
-                className={`sm:block hidden flex flex-col items-center gap-2 qrcode bg-white p-2 rounded ${isOpen ? "popupQr" : ""
-                  }`}
+                className={`hidden sm:flex flex-col items-center gap-2 qrcode bg-white p-2 rounded ${isOpen ? "popupQr" : ""}`}
+
                 onClick={() => setIsOpen((isOpen) => !isOpen)}
               >
                 <QRCode

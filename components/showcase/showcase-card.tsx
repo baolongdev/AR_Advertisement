@@ -27,13 +27,13 @@ export default function showcaseCard({ data, maxDescriptionLength = 20 }) {
             ar-modes="webxr scene-viewer quick-look"
           >
           </model-viewer>
-          <InfoContainer email={email}/>
+          <InfoContainer email={email} />
         </div>
       </div>
       <a href={`/model/${key}`}>
         <div className='title flex flex-col grow items-start gap-2'>
           <h4 className='text-white'>{title}</h4>
-          <h4 className='text-white'>{description.length > 20 ? description.slice(0, 20) + '...' : description}</h4>
+          {/* <h4 className='text-white'>{description.length > 20 ? description.slice(0, 20) + '...' : description}</h4> */}
         </div>
       </a>
     </div>
